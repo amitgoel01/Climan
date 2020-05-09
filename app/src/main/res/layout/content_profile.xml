@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+<ScrollView android:id="@+id/ScrollView01"
+    android:layout_width="match_parent"
+
+    android:layout_height="wrap_content"
+    android:scrollbars="vertical"
+    android:background="@color/white"
+    android:layout_marginTop="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/layout_padding"
+    android:paddingRight="@dimen/layout_padding">
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:orientation="vertical"
+            android:layout_height="wrap_content">
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/nameImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/emp_name"
+                    android:layout_toRightOf="@id/nameImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/TextViewEmpName"
+                    android:layout_toRightOf="@id/nameImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/empIdImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/emp_id"
+                    android:layout_toRightOf="@id/empIdImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/TextViewEmpID"
+                    android:layout_toRightOf="@id/empIdImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/empBUImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/emp_bu"
+                    android:layout_toRightOf="@id/empBUImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/TextViewBU"
+                    android:layout_toRightOf="@id/empBUImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/emailIDImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/email_id"
+                    android:layout_toRightOf="@id/emailIDImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/TextViewEmailID"
+                    android:layout_toRightOf="@id/emailIDImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/countryImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/country"
+                    android:layout_toRightOf="@id/countryImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/country_picker_search"
+                    android:layout_toRightOf="@id/countryImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/cityImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/city"
+                    android:layout_toRightOf="@id/cityImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/city_picker_search"
+                    android:layout_toRightOf="@id/cityImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/stateImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/state"
+                    android:layout_toRightOf="@id/stateImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/state_picker_search"
+                    android:layout_toRightOf="@id/stateImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/designationImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/designation"
+                    android:layout_toRightOf="@id/designationImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/designation"
+                    android:layout_toRightOf="@id/designationImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/jobTitleImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/job_title"
+                    android:layout_toRightOf="@id/jobTitleImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/job_title"
+                    android:layout_toRightOf="@id/jobTitleImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/rmImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/reporting_manager"
+                    android:layout_toRightOf="@id/rmImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/reporting_manager"
+                    android:layout_toRightOf="@id/rmImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/cnImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/phone_number"
+                    android:layout_toRightOf="@id/cnImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/contact_number"
+                    android:layout_toRightOf="@id/cnImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/dojImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/doj"
+                    android:layout_toRightOf="@id/dojImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/doj"
+                    android:layout_toRightOf="@id/dojImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+                <ImageView
+                    android:id="@+id/dobImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+                    android:text="@string/dob"
+                    android:layout_toRightOf="@id/dobImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/dob"
+                    android:layout_toRightOf="@id/dobImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+            <RelativeLayout style="@style/profileDetailsLayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                xmlns:android="http://schemas.android.com/apk/res/android">
+
+                <ImageView
+                    android:id="@+id/tenureImageView"
+                    android:src="@drawable/ic_add_client"
+                    style="@style/profileDetailsImage" />
+
+                <TextView
+
+                    android:text="@string/tenure"
+                    android:layout_toRightOf="@id/tenureImageView"
+                    style="@style/profileDetailsTextMain" />
+
+                <TextView
+                    android:id="@+id/tenure"
+                    android:layout_toRightOf="@id/tenureImageView"
+                    style="@style/profileDetailsMiniText" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
+</layout>

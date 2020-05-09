@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/loginFragment">
+
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.crm.fragments.LoginFragment"
+        android:label="LoginFragment" >
+        <action
+            android:id="@+id/action_loginFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment"
+            app:popUpTo="@id/loginFragment"
+            app:popUpToInclusive="true"/>
+    </fragment>
+
+    <fragment
+        android:id="@+id/addJobFragment"
+        android:name="com.crm.fragments.AddJobFragment"
+        android:label="AddJobFragment" >
+
+        <action
+            android:id="@+id/action_addJobFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/searchProfileFragment"
+        android:name="com.crm.fragments.SearchProfileFragment"
+        android:label="SearchProfileFragment" >
+
+        <action
+            android:id="@+id/action_searchProfileFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/clientFragment"
+        android:name="com.crm.fragments.ClientFragment"
+        android:label="ClientFragment" >
+
+        <action
+            android:id="@+id/action_clientFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/dashboardFragment"
+        android:name="com.crm.fragments.DashboardFragment"
+        android:label="DashboardFragment" >
+
+        <action
+            android:id="@+id/action_dashboardFragment_to_addJobFragment"
+            app:destination="@id/addJobFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_searchProfileFragment"
+            app:destination="@id/searchProfileFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_clientFragment"
+            app:destination="@id/clientFragment" />
+    </fragment>
+
+</navigation>

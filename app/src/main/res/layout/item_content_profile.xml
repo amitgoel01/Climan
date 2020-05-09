@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout style="@style/profileDetailsLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <ImageView
+        android:id="@+id/nameImageView"
+        android:src="@drawable/ic_add_client"
+        style="@style/profileDetailsImage" />
+
+    <TextView
+        android:id="@+id/header"
+        android:text="Name"
+        android:layout_toRightOf="@id/nameImageView"
+        style="@style/profileDetailsTextMain" />
+
+    <TextView
+        android:id="@+id/content"
+        android:text="content"
+        android:layout_toRightOf="@id/nameImageView"
+        style="@style/profileDetailsMiniText" />
+
+</RelativeLayout>

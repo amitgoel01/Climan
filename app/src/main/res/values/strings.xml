@@ -1,0 +1,131 @@
+<resources>
+    <string name="app_name">CliMan</string>
+    <string name="app_main_screen">Sign in</string>
+    <string name="app_main_screen_title">CRM Application</string>
+    <string name="app_main_desc">A sample app to showcase Cognito Identity and the SDK for Android.</string>
+    <string name="nav_drawer_open">Open navigation drawer</string>
+    <string name="nav_drawer_close">Close navigation drawer</string>
+    <string name="title_activity_user">UserActivity</string>
+    <string name="crm_sales">CRM Sale</string>
+    <string name="Username">Username</string>
+    <string name="Password">Password</string>
+    <string name="Menu">Menu</string>
+    <string name="pick_MFA">MFA Options</string>
+    <string name="title_activity_about_app">AboutApp</string>
+    <string name="about"></string>
+    <string name="title_activity_sign_up_confirm">SignUpConfirm</string>
+    <string name="title_activity_mfa">MFAActivity</string>
+    <string name="title_activity_choose_mfa">ChooseMFA</string>
+    <string name="title_activity_forgot_password">ForgotPasswordActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_change_password">ChangePasswordActivity</string>
+    <string name="title_activity_verify">VerifyActivity</string>
+    <string name="title_activity_add_attribute">AddAttributeActivity</string>
+    <string name="title_activity_device_settings">DeviceSettings</string>
+    <string name="title_activity_new_password">NewPassword</string>
+
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="title_activity_add_location">AddLocation</string>
+    <!-- Strings used for fragments for navigation -->
+    <string name="first_fragment_label">First Fragment</string>
+    <string name="second_fragment_label">Second Fragment</string>
+    <string name="next">Next</string>
+    <string name="previous">Previous</string>
+
+    <string name="hello_first_fragment">Hello first fragment</string>
+    <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
+
+    <string name="finance">Finance</string>
+    <string name="hr">HR</string>
+    <string name="management">Management</string>
+    <string name="sales">Sales</string>
+
+    <string name="company_name">Company Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="log_in">Log in</string>
+    <string name="dashboard">Dashboard</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="powered_by">Powered by: Software Solution</string>
+
+
+    <string name="emp_name">Employee Name</string>
+    <string name="personal_details">Personal Details</string>
+    <string name="emp_id">Employee ID</string>
+    <string name="user_id">User ID</string>
+    <string name="emp_bu">Business Unit</string>
+    <string name="email_id">Email ID</string>
+    <string name="india">India</string>
+    <string name="country">Country</string>
+    <string name="city">City</string>
+    <string name="state">State</string>
+    <string name="designation">Designation</string>
+    <string name="job_type">Job Type</string>
+    <string name="reporting_manager">Reporting Manager</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="doj">Date Of Joining</string>
+    <string name="dob">DOB</string>
+    <string name="tenure">Tenure</string>
+    <string name="save">SAVE</string>
+    <string name="edit">EDIT</string>
+    <string name="display_client">DISPLAY CLIENTS</string>
+    <string name="add_client">Add Client</string>
+    <string name="add_profile">Add Profile</string>
+    <string name="personal_detail">Personal Details</string>
+    <string name="my_profile">My Profile</string>
+    <string name="search_profile">Search Profile</string>
+    <string name="search_by">Search By</string>
+    <string name="go">GO</string>
+    <string name="text_search">Enter text to search</string>
+    <string name="no_match_found">No Match Found</string>
+    <string name="edit_your_profile">Edit your profile</string>
+    <string name="job_id">Job ID</string>
+    <string name="add_job">Add Job</string>
+
+    <string name="search_job">Search Job</string>
+    <string name="job_listing">Job Listing</string>
+    <string name="job_title">Job Title</string>
+    <string name="job_description">Job Description</string>
+    <string name="job_location">Job Location</string>
+    <string name="job_posted_date">Job Posted Date</string>
+    <string name="job_last_date_to_apply">Job Last Date To Apply</string>
+    <string name="job_country">Job Country</string>
+    <string name="job_state">Job State</string>
+    <string name="job_city">Job City</string>
+    <string name="job_department">Job Department</string>
+    <string name="job_hiring_location">Job Hiring Location</string>
+    <string name="referred_by">Referred By</string>
+    <string name="announcements">Announcements</string>
+    <string name="expenses">Expenses</string>
+    <string name="expenses_overview">Expenses Overivew</string>
+    <string name="target_overview">Target Overview</string>
+    <string name="tracking">Tracking</string>
+    <string name="my_tasks">My Tasks</string>
+    <string name="client">Client</string>
+    <string name="new_client">New Client</string>
+    <string name="existing_client">Existing Client</string>
+    <string name="follow_up_client">Follow Up Client</string>
+    <string name="client_id">Client ID</string>
+    <string name="client_not_available">Client Not Available</string>
+    <string name="search">Search</string>
+    <string name="code">code</string>
+    <string name="std_code">Std Code</string>
+    <string name="extension">Ext</string>
+    <string name="mobile_code">+91</string>
+    <string name="office_number">Office Number</string>
+
+
+    <!--For sales client-->
+    <string name="client_name">Client Name</string>
+
+    <string-array name="search_input">
+        <item>empId</item>
+        <item>emailId</item>
+    </string-array>
+
+
+    <string name="title_activity_profile">Profile</string>
+</resources>

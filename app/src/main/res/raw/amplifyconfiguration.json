@@ -1,0 +1,16 @@
+{
+    "UserAgent": "aws-amplify-cli/2.0",
+    "Version": "1.0",
+    "api": {
+        "plugins": {
+            "awsAPIPlugin": {
+                "AmplifyAndroid": {
+                    "endpointType": "GraphQL",
+                    "endpoint": "https://jlcvvlgghjfddhq6w3u3nt5obm.appsync-api.us-east-1.amazonaws.com/graphql",
+                    "region": "us-east-1",
+                    "authorizationType": "AMAZON_COGNITO_USER_POOLS"
+                }
+            }
+        }
+    }
+}

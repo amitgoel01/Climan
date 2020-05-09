@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="toolbar_background">#404142</color>
+    <color name="toolbar_items">#CBCBCB</color>
+    <color name="alert">#AC1600</color>
+    <color name="success">#37A51C</color>
+    <color name="button_default">#329AD6</color>
+    <color name="informative_message">#329AD6</color>
+    <color name="button_pressed">#2A5C91</color>
+    <color name="text_border_default">#303232</color>
+    <color name="text_border_selected">#4EA9DC</color>
+    <color name="warning">#E94700</color>
+    <color name="white">#FFFFFF</color>
+    <color name="grey_100">#F5F7F7</color>
+    <color name="grey_300">#8D9496</color>
+    <color name="grey_400">#5A5D5E</color>
+    <color name="grey_500">#404142</color>
+    <color name="grey_600">#303232</color>
+    <color name="grey_700">#1D1E1E</color>
+
+    <color name="dashboard_menu_color">#018ED3</color>
+    <color name="background_grey">#F5F5F5</color>
+    <color name="browser_actions_bg_grey">#F5F5F5</color>
+    <color name="browser_actions_divider_color">#1E000000</color>
+    <color name="browser_actions_text_color">#DE000000</color>
+    <color name="browser_actions_title_color">#646464</color>
+    <dimen name="browser_actions_context_menu_max_width">500dp</dimen>
+    <dimen name="browser_actions_context_menu_min_padding">20dp</dimen>
+    <color name="menu_text_color">#283587</color>
+    <color name="dashboard_background">#F6F6F9</color>
+    <color name="signupColor">#066e8a</color>
+
+    <color name="drawer_header_color">#0083a7</color>
+
+
+    <!--colors for profile-->
+    <color name="profilePrimaryDark">#FF3B30</color>
+    <color name="profileAccentColor">#F7F7F7</color>
+    <color name="whiteTextColor">#fff</color>
+    <color name="profileBackground">#fff</color>
+    <color name="blackTextColor">#000</color>
+    <color name="profileEditTextColor">#707070</color>
+
+    <color name="sky_blue">#09A9FF</color>
+    <color name="green">#4BAA50</color>
+    <color name="blue">#673BB7</color>
+    <color name="red">#F94336</color>
+    <color name="orange">#ffa500</color>
+    <color name="maroon">#8b0000</color>
+    <color name="light_sky_blue">#c6e2ff</color>
+    <color name="light_yellow">#fbc779</color>
+    <color name="dark_pink">#f6546a</color>
+    <color name="silver">#576675</color>
+    <color name="light_silver">#CBCBCB</color>
+</resources>
