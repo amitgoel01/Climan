@@ -76,6 +76,9 @@
     <string name="add_profile">Add Profile</string>
     <string name="personal_detail">Personal Details</string>
     <string name="my_profile">My Profile</string>
+    <string name="faqs">FAQ\'s</string>
+    <string name="logout">Logout</string>
+    <string name="about_this_release">About This Release</string>
     <string name="search_profile">Search Profile</string>
     <string name="search_by">Search By</string>
     <string name="go">GO</string>
@@ -101,6 +104,7 @@
     <string name="announcements">Announcements</string>
     <string name="expenses">Expenses</string>
     <string name="expenses_overview">Expenses Overivew</string>
+    <string name="navigation">Navigation</string>
     <string name="target_overview">Target Overview</string>
     <string name="tracking">Tracking</string>
     <string name="my_tasks">My Tasks</string>
