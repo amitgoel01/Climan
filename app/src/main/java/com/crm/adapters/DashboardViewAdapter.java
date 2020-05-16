@@ -40,7 +40,6 @@ public class DashboardViewAdapter extends RecyclerView.Adapter {
             v.setOnClickListener(this);
             textView = v.findViewById(R.id.textView);
             card = v.findViewById(R.id.cardView);
-
         }
 
         public void setData(DataModel item) {

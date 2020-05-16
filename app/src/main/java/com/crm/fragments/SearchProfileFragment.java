@@ -29,9 +29,10 @@ import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
 public class SearchProfileFragment extends Fragment implements View.OnClickListener{
+    private FragmentSearchProfileBinding mSearchProfileBinding;
     private  Spinner mSpinner;
     private EmployeeListViewModel mViewModel;
-    private FragmentSearchProfileBinding mSearchProfileBinding;
+
 
     @Nullable
     @Override
@@ -87,33 +88,33 @@ public class SearchProfileFragment extends Fragment implements View.OnClickListe
 
 
  private void updateEmployeeContent(EmployeeEntity employee) {
-        TextView text = mSearchProfileBinding.searchProfileContent.contentProfile.TextViewEmpName;
+        TextView text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.TextViewEmpName;
         text.setText(employee.getEmpName());
-        text = mSearchProfileBinding.searchProfileContent.contentProfile.TextViewEmpID;
+        text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.TextViewEmpID;
         text.setText(employee.getEmpId());
-        text = mSearchProfileBinding.searchProfileContent.contentProfile.TextViewBU;
+        text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.TextViewBU;
         text.setText(employee.getBusinessUnit());
-        text = mSearchProfileBinding.searchProfileContent.contentProfile.TextViewEmailID;
+        text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.TextViewEmailID;
         text.setText(employee.getEmailId());
-        text = mSearchProfileBinding.searchProfileContent.contentProfile.countryPickerSearch;
+        text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.countryPickerSearch;
         text.setText(employee.getCountry());
-        text = mSearchProfileBinding.searchProfileContent.contentProfile.cityPickerSearch;
+        text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.cityPickerSearch;
         text.setText(employee.getCity());
-        text = mSearchProfileBinding.searchProfileContent.contentProfile.statePickerSearch;
+        text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.statePickerSearch;
         text.setText(employee.getState());
-        text = mSearchProfileBinding.searchProfileContent.contentProfile.designation;
+        text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.designation;
         text.setText(employee.getDesignation());
-         text = mSearchProfileBinding.searchProfileContent.contentProfile.jobTitle;
+         text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.jobTitle;
          text.setText(employee.getJobType());
-        text = mSearchProfileBinding.searchProfileContent.contentProfile.reportingManager;
+        text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.reportingManager;
         text.setText(employee.getRpManager());
-        text = mSearchProfileBinding.searchProfileContent.contentProfile.contactNumber;
+        text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.contactNumber;
         text.setText(employee.getPhNumber());
-        text = mSearchProfileBinding.searchProfileContent.contentProfile.doj;
+        text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.doj;
         text.setText(employee.getDoj());
-        text = mSearchProfileBinding.searchProfileContent.contentProfile.dob;
+        text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.dob;
         text.setText(employee.getDob());
-        text = mSearchProfileBinding.searchProfileContent.contentProfile.tenure;
+        text = mSearchProfileBinding.searchProfileContent.contentSearchProfile.tenure;
         text.setText(employee.getTenure());
 
     }

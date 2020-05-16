@@ -103,7 +103,7 @@
     <string name="referred_by">Referred By</string>
     <string name="announcements">Announcements</string>
     <string name="expenses">Expenses</string>
-    <string name="expenses_overview">Expenses Overivew</string>
+    <string name="expenses_overview">Overivew</string>
     <string name="navigation">Navigation</string>
     <string name="target_overview">Target Overview</string>
     <string name="tracking">Tracking</string>
@@ -120,8 +120,8 @@
     <string name="extension">Ext</string>
     <string name="mobile_code">+91</string>
     <string name="office_number">Office Number</string>
-
-
+    <string name="welcome">Welcome</string>
+    <string name="user">User</string>
     <!--For sales client-->
     <string name="client_name">Client Name</string>
 

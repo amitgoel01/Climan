@@ -1,5 +1,6 @@
 package com.crm.fragments;
 
+import android.graphics.PorterDuff;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -110,6 +111,7 @@ public class ClientFragment extends Fragment implements DatePickerFragment.IUpda
                 Navigation.findNavController(mClientBinding.getRoot()).navigate(R.id.action_clientFragment_to_dashboardFragment);
             }
         });
+        toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
     }
 
 

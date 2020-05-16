@@ -6,10 +6,7 @@
 
     android:layout_height="wrap_content"
     android:scrollbars="vertical"
-    android:background="@color/white"
-    android:layout_marginTop="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/layout_padding"
-    android:paddingRight="@dimen/layout_padding">
+    android:background="@color/white">
 
 
         <LinearLayout
@@ -21,13 +18,13 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 xmlns:android="http://schemas.android.com/apk/res/android">
-                <ImageView
-                    android:id="@+id/nameImageView"
-                    android:src="@drawable/ic_add_client"
-                    style="@style/profileDetailsImage" />
+
 
                 <TextView
+                    android:id="@+id/nameImageView"
                     android:text="@string/emp_name"
+                    android:drawableLeft="@drawable/ic_person_black_24dp"
+                    android:drawablePadding="4dp"
                     android:layout_toRightOf="@id/nameImageView"
                     style="@style/profileDetailsTextMain" />
 

@@ -79,7 +79,7 @@
         android:id="@+id/editTextUserId"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:drawableStart="@drawable/ic_person_black_24dp"
+        android:drawableStart="@drawable/ic_person_white_24dp"
         android:hint="@string/user_id"
         style="@style/EditTextTheme"
         android:inputType="text"

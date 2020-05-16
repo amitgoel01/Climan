@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/loginFragment">
+    app:startDestination="@id/clientFragment">
 
     <fragment
         android:id="@+id/loginFragment"
@@ -60,6 +60,17 @@
         <action
             android:id="@+id/action_dashboardFragment_to_clientFragment"
             app:destination="@id/clientFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_addProfileFragment"
+            app:destination="@id/addProfileFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/addProfileFragment"
+        android:name="com.crm.fragments.AddProfileFragment"
+        android:label="AddProfileFragment" >
+        <action
+            android:id="@+id/action_addProfileFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
     </fragment>
 
 </navigation>

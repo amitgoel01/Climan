@@ -8,9 +8,15 @@
         <item name="colorAccent">@color/toolbar_items</item>
     </style>
 
+    <style name="NavigationTheme" parent="AppTheme">
+        <!-- Customize your theme here. -->
+        <item name="colorControlNormal">@color/white</item>
+    </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+        <item name="android:windowBackground">@drawable/back</item>
     </style>
 
     <style name="NormalText">
@@ -73,5 +79,15 @@
     </style>
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.AppCompat.Light" />
+
+
+
+    <style name="SensibleDefaultsMaterialCard" parent="Widget.MaterialComponents.CardView">
+        <item name="android:layout_marginLeft">@dimen/mtrl_card_spacing</item>
+        <item name="android:layout_marginTop">@dimen/mtrl_card_spacing</item>
+        <item name="android:layout_marginRight">@dimen/mtrl_card_spacing</item>
+        <item name="android:minHeight">200dp</item>
+        <item name="cornerSize">8dp</item>
+    </style>
 
 </resources>

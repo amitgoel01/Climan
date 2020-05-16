@@ -3,7 +3,11 @@ package com.crm.fragments;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.PorterDuff;
 import android.os.Bundle;
+import android.util.DisplayMetrics;
+import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,6 +36,9 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.core.content.ContextCompat;
+import androidx.core.graphics.BlendModeColorFilterCompat;
+import androidx.core.graphics.BlendModeCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
@@ -59,8 +66,6 @@ public class DashboardFragment extends Fragment implements DashboardViewAdapter.
     private CognitoUserSession session;
     private CognitoUserDetails details;
 
-    // User details
-    private String username;
 
     @Nullable
     @Override
@@ -85,29 +90,29 @@ public class DashboardFragment extends Fragment implements DashboardViewAdapter.
                 R.color.orange, R.color.maroon, R.color.light_sky_blue, R.color.light_yellow,
                 R.color.dark_pink, R.color.silver, R.color.light_silver, R.color.sky_blue));
 
-        DataModel addProfile = new DataModel(getResources().getString(R.string.add_profile), R.drawable.ic_add_client, colorList.get(0),
-                R.id.action_dashboardFragment_to_addJobFragment);
-        DataModel searchProfile = new DataModel(getResources().getString(R.string.search_profile), R.drawable.ic_menu_send, colorList.get(1),
+        DataModel addProfile = new DataModel(getResources().getString(R.string.add_profile), R.drawable.ic_add_profile, colorList.get(0),
+                R.id.action_dashboardFragment_to_addProfileFragment);
+        DataModel searchProfile = new DataModel(getResources().getString(R.string.search_profile), R.drawable.ic_searchprofile, colorList.get(1),
                 R.id.action_dashboardFragment_to_searchProfileFragment);
-        DataModel addJob = new DataModel(getResources().getString(R.string.add_job), R.drawable.ic_job_search, colorList.get(2),
+        DataModel addJob = new DataModel(getResources().getString(R.string.add_job), R.drawable.ic_add_job_64px, colorList.get(2),
                 R.id.action_dashboardFragment_to_addJobFragment);
-        DataModel searchJob = new DataModel(getResources().getString(R.string.search_job), R.drawable.ic_job_search, colorList.get(3),
+        DataModel searchJob = new DataModel(getResources().getString(R.string.search_job), R.drawable.ic_search_job_48px, colorList.get(3),
                 R.id.action_dashboardFragment_to_addJobFragment);
-        DataModel announcements =  new DataModel(getResources().getString(R.string.announcements), R.drawable.ic_job_search, colorList.get(4),
+        DataModel announcements =  new DataModel(getResources().getString(R.string.announcements), R.drawable.ic_aannouncement_2, colorList.get(4),
                 R.id.action_dashboardFragment_to_addJobFragment);
-        DataModel expenses = new DataModel(getResources().getString(R.string.expenses), R.drawable.ic_menu_send, colorList.get(5),
+        DataModel expenses = new DataModel(getResources().getString(R.string.expenses), R.drawable.ic_expenses_64px, colorList.get(5),
                 R.id.action_dashboardFragment_to_addJobFragment);
-        DataModel targetOverview = new DataModel(getResources().getString(R.string.target_overview), R.drawable.ic_menu_send, colorList.get(6),
+        DataModel targetOverview = new DataModel(getResources().getString(R.string.target_overview), R.drawable.ic_track_changes_64, colorList.get(6),
                 R.id.action_dashboardFragment_to_addJobFragment);
-        DataModel client = new DataModel(getResources().getString(R.string.client), R.drawable.ic_menu_send, colorList.get(7),
+        DataModel client = new DataModel(getResources().getString(R.string.client), R.drawable.ic_client_64_px, colorList.get(7),
                 R.id.action_dashboardFragment_to_clientFragment);
-        DataModel myTask = new DataModel(getResources().getString(R.string.my_tasks), R.drawable.ic_menu_send, colorList.get(8),
+        DataModel myTask = new DataModel(getResources().getString(R.string.my_tasks), R.drawable.ic_my_task_64px, colorList.get(8),
                 R.id.action_dashboardFragment_to_addJobFragment);
-        DataModel tracking = new DataModel(getResources().getString(R.string.tracking), R.drawable.ic_menu_send, colorList.get(9),
+        DataModel tracking = new DataModel(getResources().getString(R.string.tracking), R.drawable.ic_supervised_user_circle_24px, colorList.get(9),
                 R.id.action_dashboardFragment_to_addJobFragment);
-        DataModel expensesOverview = new DataModel(getResources().getString(R.string.expenses_overview), R.drawable.ic_menu_send, colorList.get(10),
+        DataModel expensesOverview = new DataModel(getResources().getString(R.string.expenses_overview), R.drawable.ic_expanses_overview, colorList.get(10),
                 R.id.action_dashboardFragment_to_addJobFragment);
-        DataModel navigation = new DataModel(getResources().getString(R.string.navigation), R.drawable.ic_menu_send, colorList.get(11),
+        DataModel navigation = new DataModel(getResources().getString(R.string.navigation), R.drawable.ic_navigation_64px, colorList.get(11),
                 R.id.action_dashboardFragment_to_addJobFragment);
 
         if(jobTitle.equals(getResources().getString(R.string.hr))) {
@@ -128,12 +133,37 @@ public class DashboardFragment extends Fragment implements DashboardViewAdapter.
 
         DashboardViewAdapter adapter = new DashboardViewAdapter(getContext(), mArrayList, this);
         recyclerView.setAdapter(adapter);
-        GridLayoutManager manager = new GridLayoutManager(getContext(), 3, GridLayoutManager.VERTICAL, false);
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        DisplayMetrics outMetrics = new DisplayMetrics();
+        display.getMetrics(outMetrics);
+
+     /*   float density  = getResources().getDisplayMetrics().density;
+        float dpWidth  = outMetrics.widthPixels / density;
+        int columns = Math.round(dpWidth/150);*/
+
+
+        DisplayMetrics dm = new DisplayMetrics();
+        getActivity().getWindowManager().getDefaultDisplay().getMetrics(dm);
+        int w = dm.widthPixels;
+        int h = dm.heightPixels;
+        Log.d("amit", "Width:  "  + w + " height:  " + h);
+        int columns = 2;
+        if(w >= 1900) {
+            columns = 6;
+        }
+        else if(w > 1000 && w < 1900) {
+            columns = 4;
+        }
+
+        GridLayoutManager manager = new GridLayoutManager(getContext(), columns, GridLayoutManager.VERTICAL, false);
+
         recyclerView.setLayoutManager(manager);
+
     }
 
     private void setToolbar() {
-        toolbar = mFragmentDashboardBinding.toolBar.mainToolbar;;
+        toolbar = mFragmentDashboardBinding.toolBar.mainToolbar;
         TextView main_title = mFragmentDashboardBinding.toolBar.mainToolbarTitle;
         main_title.setText(getResources().getString(R.string.dashboard));
         toolbar.setTitle("");
@@ -146,7 +176,10 @@ public class DashboardFragment extends Fragment implements DashboardViewAdapter.
         mDrawerToggle = new ActionBarDrawerToggle(getActivity(), mDrawer, toolbar, R.string.nav_drawer_open,
                 R.string.nav_drawer_close);
         mDrawer.addDrawerListener(mDrawerToggle);
-        mDrawerToggle.getDrawerArrowDrawable().setTint(getResources().getColor(R.color.white, null));
+        mDrawerToggle.getDrawerArrowDrawable().setColorFilter(getResources().getColor(R.color.white),PorterDuff.Mode.SRC_ATOP);
+
+
+
         mDrawerToggle.syncState();
         closeDrawer();
         setNavDrawer();
@@ -169,7 +202,9 @@ public class DashboardFragment extends Fragment implements DashboardViewAdapter.
     private void setNavDrawer() {
         View navigationHeader = nDrawer.getHeaderView(0);
         TextView navHeaderSubTitle = navigationHeader.findViewById(R.id.textViewNavUserSub);
-        navHeaderSubTitle.setText(username);
+        SharedPreferences sharedPref = getActivity().getPreferences(Context.MODE_PRIVATE);
+        String empId = sharedPref.getString(Constants.EMPLOYEE_ID, getResources().getString(R.string.emp_id));
+        navHeaderSubTitle.setText(empId);
         //amit to uncomment
         addMenuItemInNavMenuDrawer();
     }
@@ -199,20 +234,20 @@ public class DashboardFragment extends Fragment implements DashboardViewAdapter.
     private void addOtherItems(Menu menu, int index) {
         // adding myProfile
         menu.add(Menu.NONE, R.id.action_dashboardFragment_to_addJobFragment, index,
-                getResources().getString(R.string.my_profile)).setIcon(R.drawable.ic_add_client);
+                getResources().getString(R.string.my_profile)).setIcon(R.drawable.ic_my_profile);
 
         // adding faq's
         menu.add(Menu.NONE, R.id.action_dashboardFragment_to_addJobFragment, index,
-                getResources().getString(R.string.faqs)).setIcon(R.drawable.ic_add_client);
+                getResources().getString(R.string.faqs)).setIcon(R.drawable.ic_faqs);
 
         // adding logout
         menu.add(Menu.NONE, R.id.action_dashboardFragment_to_addJobFragment, index,
-                getResources().getString(R.string.logout)).setIcon(R.drawable.ic_add_client);
+                getResources().getString(R.string.logout)).setIcon(R.drawable.ic_person_sign_out_24dp);
 
         // adding about
-        menu.add(Menu.NONE, R.id.action_dashboardFragment_to_addJobFragment, index,
+      /*  menu.add(Menu.NONE, R.id.action_dashboardFragment_to_addJobFragment, index,
                 getResources().getString(R.string.about_this_release)).setIcon(R.drawable.ic_add_client);
-
+*/
     }
 
     // Perform the action for the selected navigation item

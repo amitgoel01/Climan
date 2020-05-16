@@ -44,4 +44,8 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="headerTextSize">28sp</dimen>
 
+    <dimen name="dashboard_item_font_size">20sp</dimen>
+    <dimen name="dashboard_item_icon_width">86dp</dimen>
+    <dimen name="dashboard_item_icon_height">86dp</dimen>
+
 </resources>

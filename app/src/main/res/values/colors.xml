@@ -52,4 +52,5 @@
     <color name="dark_pink">#f6546a</color>
     <color name="silver">#576675</color>
     <color name="light_silver">#CBCBCB</color>
+    <color name="dashboard_item_icon_color">#FFFFFF</color>
 </resources>
