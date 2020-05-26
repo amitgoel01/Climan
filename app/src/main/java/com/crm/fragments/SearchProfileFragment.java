@@ -1,5 +1,6 @@
 package com.crm.fragments;
 
+import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -65,6 +66,7 @@ public class SearchProfileFragment extends Fragment implements View.OnClickListe
                R.array.search_input, android.R.layout.simple_spinner_dropdown_item);
 
        mSpinner.setAdapter(adapter);
+       mSearchProfileBinding.searchProfileContent.searchButton.setOnClickListener(this);
 
     }
 
@@ -76,6 +78,7 @@ public class SearchProfileFragment extends Fragment implements View.OnClickListe
         ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         ((AppCompatActivity)getActivity()).getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.getNavigationIcon().setColorFilter(getResources().getColor(R.color.white), PorterDuff.Mode.SRC_ATOP);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

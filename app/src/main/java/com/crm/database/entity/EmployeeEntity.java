@@ -44,11 +44,6 @@ public class EmployeeEntity implements Serializable {
     @NonNull
     private String tenure;
 
-
-    public EmployeeEntity() {
-
-    }
-
     public EmployeeEntity(String empName, String empId, String businessUnit, String emailId, String country, String city, String state, String designation, String jobType, String rpManager, String phNumber, String doj, String dob, String tenure) {
       this.empName = empName;
         this.empId = empId;

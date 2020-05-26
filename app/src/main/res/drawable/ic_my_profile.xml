@@ -1,0 +1,7 @@
+<vector android:height="@dimen/dashboard_item_icon_height" android:viewportHeight="24"
+    android:viewportWidth="24" android:width="@dimen/dashboard_item_icon_height" xmlns:android="http://schemas.android.com/apk/res/android">
+    <path android:fillColor="@color/dashboard_item_icon_color"
+        android:pathData="m12.0555,11.9994c1.5876,0 2.8734,-1.3941 2.8734,-3.1153 0,-1.7212 -1.2859,-3.1153 -2.8734,-3.1153 -1.5876,0 -2.8734,1.3941 -2.8734,3.1153 0,1.7212 1.2859,3.1153 2.8734,3.1153zM12.0555,13.557c-1.918,0 -5.7469,1.0436 -5.7469,3.1153v1.5576L17.8024,18.23v-1.5576c0,-2.0717 -3.8289,-3.1153 -5.7469,-3.1153z" android:strokeWidth="0.747981"/>
+    <path android:fillColor="@color/dashboard_item_icon_color"
+        android:pathData="m12.2144,1.6097c-6.0902,0 -11.033,4.7884 -11.033,10.6883 0,5.8999 4.9428,10.6883 11.033,10.6883 6.0902,0 11.033,-4.7884 11.033,-10.6883 0,-5.8999 -4.9428,-10.6883 -11.033,-10.6883zM12.2144,20.8486c-4.8766,0 -8.8264,-3.8264 -8.8264,-8.5506 0,-4.7242 3.9498,-8.5506 8.8264,-8.5506 4.8766,0 8.8264,3.8264 8.8264,8.5506 0,4.7242 -3.9498,8.5506 -8.8264,8.5506z" android:strokeWidth="1.08592"/>
+</vector>

@@ -13,7 +13,9 @@ import androidx.room.PrimaryKey;
 public class JobEntity implements Serializable {
 
     @PrimaryKey(autoGenerate = true)
-    private long jobId;
+    private long jobNumber;
+    @NonNull
+    private String jobId;
     @NonNull
     private String jobTitle;
     @NonNull
@@ -29,21 +31,39 @@ public class JobEntity implements Serializable {
     @NonNull
     private String jobCity;
     @NonNull
-    private String jobcatagory;
+    private String jobCategory;
     @NonNull
     private String jobDepartment;
     @NonNull
     private String emailId;
 
-    public JobEntity() {
-
+    public JobEntity(String jobId, @NonNull String jobTitle, @NonNull String jobDescription, @NonNull String jobPostedDate, @NonNull String jobLastDate, @NonNull String jobCountry, @NonNull String jobState, @NonNull String jobCity, @NonNull String jobCategory, @NonNull String jobDepartment, @NonNull String emailId) {
+        this.jobId = jobId;
+        this.jobTitle = jobTitle;
+        this.jobDescription = jobDescription;
+        this.jobPostedDate = jobPostedDate;
+        this.jobLastDate = jobLastDate;
+        this.jobCountry = jobCountry;
+        this.jobState = jobState;
+        this.jobCity = jobCity;
+        this.jobCategory = jobCategory;
+        this.jobDepartment = jobDepartment;
+        this.emailId = emailId;
     }
 
-    public long getJobId() {
+    public long getJobNumber() {
+        return jobNumber;
+    }
+
+    public void setJobNumber(long jobNumber) {
+        this.jobNumber = jobNumber;
+    }
+
+    public String getJobId() {
         return jobId;
     }
 
-    public void setJobId(long jobId) {
+    public void setJobId(String jobId) {
         this.jobId = jobId;
     }
 
@@ -111,12 +131,12 @@ public class JobEntity implements Serializable {
     }
 
     @NonNull
-    public String getJobcatagory() {
-        return jobcatagory;
+    public String getJobCategory() {
+        return jobCategory;
     }
 
-    public void setJobcatagory(@NonNull String jobcatagory) {
-        this.jobcatagory = jobcatagory;
+    public void setJobCategory(@NonNull String jobCategory) {
+        this.jobCategory = jobCategory;
     }
 
     @NonNull
@@ -135,22 +155,5 @@ public class JobEntity implements Serializable {
 
     public void setEmailId(@NonNull String emailId) {
         this.emailId = emailId;
-    }
-
-    @Override
-    public String toString() {
-        return "JobEntity{" +
-                "jobId=" + jobId +
-                ", jobTitle='" + jobTitle + '\'' +
-                ", jobDescription='" + jobDescription + '\'' +
-                ", jobPostedDate='" + jobPostedDate + '\'' +
-                ", jobLastDate='" + jobLastDate + '\'' +
-                ", jobCountry='" + jobCountry + '\'' +
-                ", jobState='" + jobState + '\'' +
-                ", jobCity='" + jobCity + '\'' +
-                ", jobType='" + jobcatagory + '\'' +
-                ", jobDepartment='" + jobDepartment + '\'' +
-                ", emailId='" + emailId + '\'' +
-                '}';
     }
 }

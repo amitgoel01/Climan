@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.crm.R;
+import com.crm.databinding.DashboardViewItemBinding;
 import com.crm.model.DataModel;
 
 import java.util.ArrayList;
@@ -21,6 +22,7 @@ public class DashboardViewAdapter extends RecyclerView.Adapter {
     ArrayList<DataModel> mValues;
     Context mContext;
     protected ItemListener mListener;
+    private DashboardViewItemBinding mItemBinding;
 
     public DashboardViewAdapter(Context context, ArrayList values, ItemListener itemListener) {
         mValues = values;
@@ -32,14 +34,15 @@ public class DashboardViewAdapter extends RecyclerView.Adapter {
 
         public TextView textView;
         public ImageView imageView;
-        public View card;
+//        public View card;
         DataModel item;
 
-        public ViewHolder(View v) {
-            super(v);
+        public ViewHolder(DashboardViewItemBinding itemBinding) {
+            super(itemBinding.getRoot());
+            View v = itemBinding.getRoot();
             v.setOnClickListener(this);
             textView = v.findViewById(R.id.textView);
-            card = v.findViewById(R.id.cardView);
+//            card = v.findViewById(R.id.cardView);
         }
 
         public void setData(DataModel item) {
@@ -48,7 +51,7 @@ public class DashboardViewAdapter extends RecyclerView.Adapter {
             textView.setText(item.getText());
             textView.setCompoundDrawablesWithIntrinsicBounds(null, mContext.getResources().
                     getDrawable(item.getIcon(), null), null, null);
-            card.setBackgroundColor(mContext.getResources().getColor(item.getColor()));
+            mItemBinding.card.setCardBackgroundColor(mContext.getResources().getColor(item.getColor()));
 
         }
 
@@ -63,10 +66,13 @@ public class DashboardViewAdapter extends RecyclerView.Adapter {
 
     @Override
     public DashboardViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater layoutInflater =
+                LayoutInflater.from(parent.getContext());
+        mItemBinding = DashboardViewItemBinding.inflate(layoutInflater, parent, false);
+        return new ViewHolder(mItemBinding);
+        /*View view = LayoutInflater.from(mContext).inflate(R.layout.dashboard_view_item, parent, false);
 
-        View view = LayoutInflater.from(mContext).inflate(R.layout.dashboard_view_item, parent, false);
-
-        return new ViewHolder(view);
+        return new ViewHolder(view);*/
     }
 
 

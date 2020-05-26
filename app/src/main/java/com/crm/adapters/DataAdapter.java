@@ -10,33 +10,41 @@ import android.widget.TextView;
 
 import com.crm.R;
 import com.crm.database.entity.EmployeeEntity;
+import com.crm.database.entity.JobEntity;
+import com.crm.databinding.ListItemBinding;
 
 import java.util.List;
 
+import androidx.databinding.DataBindingUtil;
 import androidx.recyclerview.widget.RecyclerView;
 
 public class DataAdapter extends RecyclerView.Adapter<DataAdapter.BeanHolder> {
 
- private List<EmployeeEntity> mList;
+ private List<JobEntity> mList;
     private Context context;
     private LayoutInflater layoutInflater;
-    private OnItemClick onEmployeeItemClick;
+//    private OnItemClick onEmployeeItemClick;
+    private ListItemBinding mListItemBinding;
 
-    public DataAdapter(List<EmployeeEntity> list, Context context) {
+    public DataAdapter(List<JobEntity> list, Context context) {
         layoutInflater = LayoutInflater.from(context);
         this.mList = list;
         this.context = context;
-        this.onEmployeeItemClick = (OnItemClick) context;
+//        this.onEmployeeItemClick = (OnItemClick) context;
     }
 
-    public void setList(List<EmployeeEntity> list) {
+    public void setList(List<JobEntity> list) {
         mList = list;
     }
 
     @Override
     public BeanHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        View view = layoutInflater.inflate(R.layout.list_item, parent, false);
-        return new BeanHolder(view);
+        LayoutInflater layoutInflater =
+                LayoutInflater.from(parent.getContext());
+        mListItemBinding = ListItemBinding.inflate(layoutInflater, parent, false);
+        return new BeanHolder(mListItemBinding);
+       /* View view = layoutInflater.inflate(R.layout.list_item, parent, false);
+        return new BeanHolder(view);*/
     }
 
     @Override
@@ -45,34 +53,28 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.BeanHolder> {
         if(mList.size() >0) {
 
             String space = " : ";
-            String empName = context.getResources().getString(R.string.emp_name) + space+ mList.get(position).getEmpName();
-            holder.editTextName.setText(empName);
-            String empId = context.getResources().getString(R.string.emp_id) + space + mList.get(position).getEmpId();
-            holder.editTextEmpID.setText(empId);
-            String businessUnit = context.getResources().getString(R.string.emp_bu) + space + mList.get(position).getBusinessUnit();
-            holder.editTextBU.setText(businessUnit);
+            String jobId = context.getResources().getString(R.string.job_id) + space+ mList.get(position).getJobId();
+            holder.binding.jobId.setText(jobId);
+            String jobTitle = context.getResources().getString(R.string.job_title) + space + mList.get(position).getJobTitle();
+            holder.binding.jobTitle.setText(jobTitle);
+            String jobDescription = context.getResources().getString(R.string.job_description) + space + mList.get(position).getJobDescription();
+            holder.binding.jobDescription.setText(jobDescription);
+            String jobPostedDate = context.getResources().getString(R.string.job_posted_date) + space + mList.get(position).getJobPostedDate();
+            holder.binding.jobPostedDate.setText(jobPostedDate);
+            String jobExpDate = context.getResources().getString(R.string.job_expiry_date) + space + mList.get(position).getJobLastDate();
+            holder.binding.jobExpiryDate.setText(jobExpDate);
+            String country = context.getResources().getString(R.string.country) + space + mList.get(position).getJobCountry();
+            holder.binding.countryPickerSearch.setText(country);
+            String city = context.getResources().getString(R.string.city) + space + mList.get(position).getJobCity();
+            holder.binding.cityPickerSearch.setText(city);
+            String state = context.getResources().getString(R.string.state) + space + mList.get(position).getJobState();
+            holder.binding.statePickerSearch.setText(state);
+            String category = context.getResources().getString(R.string.job_category) + space + mList.get(position).getJobCategory();
+            holder.binding.jobType.setText(category);
+            String jobDepartment = context.getResources().getString(R.string.job_department) + space + mList.get(position).getJobDepartment();
+            holder.binding.department.setText(jobDepartment);
             String emailId = context.getResources().getString(R.string.email_id) + space + mList.get(position).getEmailId();
-            holder.editTextEmailID.setText(emailId);
-            String country = context.getResources().getString(R.string.country) + space + mList.get(position).getCountry();
-            holder.countrySpinner.setText(country);
-            String city = context.getResources().getString(R.string.city) + space + mList.get(position).getCity();
-            holder.citySpinner.setText(city);
-            String state = context.getResources().getString(R.string.state) + space + mList.get(position).getState();
-            holder.stateSpinner.setText(state);
-            String designation = context.getResources().getString(R.string.designation) + space + mList.get(position).getDesignation();
-            holder.designation.setText(designation);
-            String jobTitle = context.getResources().getString(R.string.job_type) + space + mList.get(position).getJobType();
-            holder.designation.setText(jobTitle);
-            String rpManager = context.getResources().getString(R.string.reporting_manager) + space + mList.get(position).getRpManager();
-            holder.reportingManager.setText(rpManager);
-            String phNumber = context.getResources().getString(R.string.phone_number) + space + mList.get(position).getPhNumber();
-            holder.contactNumber.setText(phNumber);
-            String doj = context.getResources().getString(R.string.doj) + space + mList.get(position).getDoj();
-            holder.doj.setText(doj);
-            String dob = context.getResources().getString(R.string.dob) + space + mList.get(position).getDob();
-            holder.dob.setText(dob);
-            String tenure = context.getResources().getString(R.string.tenure) + space + mList.get(position).getTenure();
-            holder.tenure.setText(tenure);
+            holder.binding.emailId.setText(emailId);
         }
     }
 
@@ -81,11 +83,11 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.BeanHolder> {
         return mList.size();
     }
 
-    public class BeanHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+    public class BeanHolder extends RecyclerView.ViewHolder /*implements View.OnClickListener*/ {
 
         /*TextView textViewContent;
         TextView textViewTitle;*/
-        private TextView editTextName;
+        /*private TextView editTextName;
         private TextView editTextEmpID;
         private TextView editTextBU;
         private TextView editTextEmailID;
@@ -97,12 +99,16 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.BeanHolder> {
         private TextView contactNumber;
         private  TextView doj;
         private TextView dob;
-        private TextView tenure;
+        private TextView tenure;*/
+        private final ListItemBinding binding;
 
-        public BeanHolder(View itemView) {
-            super(itemView);
-            itemView.setOnClickListener(this);
-            editTextName  =itemView.findViewById(R.id.TextViewName);
+        public BeanHolder(ListItemBinding listItemBinding) {
+            super(listItemBinding.getRoot());
+            binding = listItemBinding;
+
+//            listItemBinding.getRoot().setOnClickListener(this);
+
+            /*editTextName  =itemView.findViewById(R.id.TextViewName);
             editTextEmpID = itemView.findViewById(R.id.TextViewEmpID);
             editTextBU = itemView.findViewById(R.id.TextViewBU);
             editTextEmailID = itemView.findViewById(R.id.TextViewEmailID);
@@ -115,17 +121,17 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.BeanHolder> {
             citySpinner = itemView.findViewById(R.id.city_picker_search);
             stateSpinner = itemView.findViewById(R.id.state_picker_search);
             doj = itemView.findViewById(R.id.doj);
-            dob = itemView.findViewById(R.id.dob);
+            dob = itemView.findViewById(R.id.dob);*/
         }
 
-        @Override
+       /* @Override
         public void onClick(View view) {
             onEmployeeItemClick.onEmployeeClick(getAdapterPosition());
-        }
+        }*/
     }
 
 
-    public interface OnItemClick {
+ /*   public interface OnItemClick {
         void onEmployeeClick(int pos);
-    }
+    }*/
 }

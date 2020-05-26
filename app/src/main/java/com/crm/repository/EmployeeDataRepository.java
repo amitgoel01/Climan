@@ -35,6 +35,7 @@ public class EmployeeDataRepository {
         mAllEmployees = mEmpDao.getAllEmployees();
     }
 
+
     private void asyncFinished(List<EmployeeEntity> results) {
         searchResults.setValue(results);
     }

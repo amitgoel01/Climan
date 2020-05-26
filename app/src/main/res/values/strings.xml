@@ -64,6 +64,7 @@
     <string name="state">State</string>
     <string name="designation">Designation</string>
     <string name="job_type">Job Type</string>
+    <string name="job_category">Job Category</string>
     <string name="reporting_manager">Reporting Manager</string>
     <string name="phone_number">Phone Number</string>
     <string name="doj">Date Of Joining</string>
@@ -87,13 +88,14 @@
     <string name="edit_your_profile">Edit your profile</string>
     <string name="job_id">Job ID</string>
     <string name="add_job">Add Job</string>
-
+    <string name="all_jobs">All Jobs</string>
     <string name="search_job">Search Job</string>
     <string name="job_listing">Job Listing</string>
     <string name="job_title">Job Title</string>
     <string name="job_description">Job Description</string>
     <string name="job_location">Job Location</string>
     <string name="job_posted_date">Job Posted Date</string>
+    <string name="job_expiry_date">Job Expiry Date</string>
     <string name="job_last_date_to_apply">Job Last Date To Apply</string>
     <string name="job_country">Job Country</string>
     <string name="job_state">Job State</string>
@@ -124,12 +126,63 @@
     <string name="user">User</string>
     <!--For sales client-->
     <string name="client_name">Client Name</string>
-
     <string-array name="search_input">
         <item>empId</item>
         <item>emailId</item>
     </string-array>
 
+    <string-array name="job_search_input">
+        <item>@string/all_jobs</item>
+        <item>@string/job_id</item>
+        <item>@string/job_posted_date</item>
+        <item>@string/country</item>
+        <item>@string/city</item>
+        <item>@string/state</item>
+        <item>@string/job_department</item>
+    </string-array>
 
     <string name="title_activity_profile">Profile</string>
+    <string name="set_client_group_id">Set Client Group Id</string>
+    <string name="auto_generated">Client Id will be Auto Generated</string>
+    <string name="set_client_group_name">Set Client Group Name</string>
+
+    <string name="client_group_name">Client Group Name</string>
+    <string name="client_group">Client Group</string>
+    <string name="contact_person">Contact Person</string>
+    <string name="client_group_code">Client Group Code</string>
+    <string name="client_Company_Name">Client Company Name</string>
+    <string name="client_address_first_line">Client Address First Line</string>
+    <string name="client_address_second_line">Client Address Second Line</string>
+    <string name="pin_code">Pin Code</string>
+    <string name="client_source">Client source</string>
+
+    <string name="date_of_contact">Date of Contact</string>
+    <string name="service_required">Service Required</string>
+    <string name="status">Status</string>
+    <string name="comments">Comments</string>
+    <string name="next_meeting_date">Next Meeting Date</string>
+    <string name="next_meeting_time">Next Meeting Time</string>
+    <string name="client_group_details">Client Group Details</string>
+
+    <string name="client_company_group">Client Company Group Name</string>
+    <string name="check_client_group_details">Checking Client Group Details</string>
+    <string name="check">CHECK</string>
+    <string name="generate">GENERATE</string>
+    <string name="back">BACK</string>
+    <string name="yes">YES</string>
+    <string name="no">NO</string>
+    <string name="client_group_id">Client Group Id : </string>
+    <string name="client_code_available">Client Code is available</string>
+    <string name="client_code_generated">Client Code is generated</string>
+    <string name="client_not_exist">Client Not Exist\n Press Generate to generate Client Group Id</string>
+
+    <string name="next_person">Next Person</string>
+    <string name="self">Self</string>
+    <string name="other_person">other Person</string>
+    <string name="next_contact_person_name">Next Contact Person Name</string>
+    <string name="meeting_outcome">Meeting Outcome</string>
+    <string name="survey_done">Survey Done</string>
+    <string name="survey_date">Survey Date</string>
+    <string name="follow_up_meeting">Follow Up Meeting</string>
+    <string name="next_contact_person">Next Contact Person</string>
 </resources>

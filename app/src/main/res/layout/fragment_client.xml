@@ -79,6 +79,7 @@
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
         android:visibility="gone"
         android:orientation="vertical">
         <include layout="@layout/client_content"

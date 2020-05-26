@@ -32,27 +32,9 @@ public class DataGenerator {
 
     public static List<EmployeeEntity> generateProducts() {
         List<EmployeeEntity> employeeList = new ArrayList<>(2);
-        Random rnd = new Random();
-        for (int i = 0; i < FIRST.length; i++) {
-            for (int j = 0; j < 2; j++) {
-                EmployeeEntity employee = new EmployeeEntity();
-                employee.setEmpName(FIRST[i]+ Integer.toString(i));
-                employee.setEmpId(FIRST[i]+ Integer.toString(i));
-                employee.setBusinessUnit(FIRST[i]+ Integer.toString(i));
-                employee.setEmailId(FIRST[i]+ Integer.toString(i));
-                employee.setCountry(FIRST[i]+ Integer.toString(i));
-                employee.setCity(FIRST[i]+ Integer.toString(i));
-                employee.setState(FIRST[i]+ Integer.toString(i));
-                employee.setDesignation(FIRST[i]+ Integer.toString(i));
-                employee.setJobType(FIRST[i]+ Integer.toString(i));
-                employee.setRpManager(FIRST[i]+ Integer.toString(i));
-                employee.setPhNumber(FIRST[i]+ Integer.toString(i));
-                employee.setDoj(FIRST[i]+ Integer.toString(i));
-                employee.setDob(FIRST[i]+ Integer.toString(i));
-                employee.setTenure(FIRST[i]+ Integer.toString(i));
-                employeeList.add(employee);
-            }
-        }
+        String name = "amit";
+        EmployeeEntity employee = new EmployeeEntity(name, name, name, name, name, name, name, name, name, name, name, name, name, name);
+        employeeList.add(employee);
         return employeeList;
     }
 }

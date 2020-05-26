@@ -97,7 +97,7 @@ public class DashboardFragment extends Fragment implements DashboardViewAdapter.
         DataModel addJob = new DataModel(getResources().getString(R.string.add_job), R.drawable.ic_add_job_64px, colorList.get(2),
                 R.id.action_dashboardFragment_to_addJobFragment);
         DataModel searchJob = new DataModel(getResources().getString(R.string.search_job), R.drawable.ic_search_job_48px, colorList.get(3),
-                R.id.action_dashboardFragment_to_addJobFragment);
+                R.id.action_dashboardFragment_to_searchJobFragment);
         DataModel announcements =  new DataModel(getResources().getString(R.string.announcements), R.drawable.ic_aannouncement_2, colorList.get(4),
                 R.id.action_dashboardFragment_to_addJobFragment);
         DataModel expenses = new DataModel(getResources().getString(R.string.expenses), R.drawable.ic_expenses_64px, colorList.get(5),

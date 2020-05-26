@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="@dimen/layout_padding">
+
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/NormalText"
+            android:gravity="center"
+            android:textSize="20sp"
+            android:textAllCaps="true"
+            android:text="@string/check_client_group_details">
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight=".7"
+                style="@style/NormalText">
+
+
+                <AutoCompleteTextView
+                    android:id="@+id/client_group_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/client_group_name"
+                    android:inputType="textPersonName"
+                    />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/checkButton"
+                android:layout_width="0dp"
+
+                android:layout_height="wrap_content"
+                android:text="@string/check"
+                android:textColor="@android:color/black"
+                android:layout_gravity="center"
+                android:layout_weight=".3"
+                android:layout_marginTop="@dimen/vertical_margin"/>
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/client_not_exist"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/NormalText"
+            android:textSize="20sp"
+            android:visibility="gone"
+            android:gravity="center"
+            android:text="@string/client_not_exist"/>
+
+        <TextView
+            android:id="@+id/clientGroupId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            style="@style/NormalText"
+            android:visibility="gone"
+            android:textSize="20sp"/>
+
+        <Button android:layout_width="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_height="wrap_content"
+            android:text="@string/generate"
+            android:visibility="gone"
+            android:layout_gravity="center"
+            android:id="@+id/create"
+            />
+    </LinearLayout>
+</layout>

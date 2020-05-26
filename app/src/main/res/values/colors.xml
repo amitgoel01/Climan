@@ -38,10 +38,11 @@
     <color name="profileAccentColor">#F7F7F7</color>
     <color name="whiteTextColor">#fff</color>
     <color name="profileBackground">#fff</color>
-    <color name="blackTextColor">#000</color>
+    <color name="blackTextColor">#D0D3D4</color>
     <color name="profileEditTextColor">#707070</color>
 
     <color name="sky_blue">#09A9FF</color>
+    <color name="black">@android:color/black</color>
     <color name="green">#4BAA50</color>
     <color name="blue">#673BB7</color>
     <color name="red">#F94336</color>

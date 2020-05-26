@@ -63,6 +63,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_addProfileFragment"
             app:destination="@id/addProfileFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_searchJobFragment"
+            app:destination="@id/searchJobFragment" />
     </fragment>
     <fragment
         android:id="@+id/addProfileFragment"
@@ -70,6 +73,14 @@
         android:label="AddProfileFragment" >
         <action
             android:id="@+id/action_addProfileFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/searchJobFragment"
+        android:name="com.crm.fragments.SearchJobFragment"
+        android:label="SearchJobFragment" >
+        <action
+            android:id="@+id/action_searchJobFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment" />
     </fragment>
 

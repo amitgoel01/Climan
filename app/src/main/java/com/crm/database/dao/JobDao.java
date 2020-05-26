@@ -3,7 +3,7 @@ package com.crm.database.dao;
 
 
 import com.crm.Utils.Constants;
-import com.crm.database.entity.EmployeeEntity;
+import com.crm.database.entity.JobEntity;
 import com.crm.database.entity.JobEntity;
 
 import java.util.List;
@@ -24,45 +24,57 @@ import androidx.room.Update;
 public interface JobDao {
 
     @Query("SELECT * FROM " + Constants.TABLE_JOB)
-    LiveData<List<JobEntity>> getAllJobs();
+    LiveData<List<JobEntity>> listAllJobs();
 
-    @Query("SELECT * FROM " + Constants.TABLE_EMPLOYEE + " WHERE " + Constants.EMAIL_ID + " = :emailId")
-    List<EmployeeEntity> findEmployeeWithEmail(String emailId);
+    @Query("SELECT * FROM " + Constants.TABLE_JOB + " WHERE " + Constants.JOB_DEPARTMENT + " = :department")
+    List<JobEntity> findJobWithDepartment(String department);
 
-    @Query("SELECT * FROM " + Constants.TABLE_EMPLOYEE + " WHERE " + Constants.EMPLOYEE_ID + " = :empId")
-    List<EmployeeEntity> findEmployeeWithEmpId(String empId);
+    @Query("SELECT * FROM " + Constants.TABLE_JOB + " WHERE " + Constants.JOB_CITY + " = :city")
+    List<JobEntity> findJobWithCity(String city);
+
+    @Query("SELECT * FROM " + Constants.TABLE_JOB + " WHERE " + Constants.JOB_STATE + " = :state")
+    List<JobEntity> findJobWithState(String state);
+
+    @Query("SELECT * FROM " + Constants.TABLE_JOB + " WHERE " + Constants.JOB_COUNTRY + " = :country")
+    List<JobEntity> findJobWithCountry(String country);
+
+    @Query("SELECT * FROM " + Constants.TABLE_JOB + " WHERE " + Constants.JOB_ID + " = :jobId")
+    List<JobEntity> findJobWithId(String jobId);
+
+    @Query("SELECT * FROM " + Constants.TABLE_JOB + " WHERE " + Constants.JOB_POSTED_DATE + " = :job")
+    List<JobEntity> findJobWithJobPostedDate(String job);
 
     /*
      * Insert the object in database
-     * @param Employee, object to be inserted
+     * @param Job, object to be inserted
      */
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    long insertEmployee(EmployeeEntity Employee);
+    long insertJob(JobEntity Job);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insertAll(List<EmployeeEntity> employeeList);
+    void insertAll(List<JobEntity> employeeList);
 
     /*
      * update the object in database
-     * @param Employee, object to be updated
+     * @param Job, object to be updated
      */
     @Update
-    void updateEmployee(EmployeeEntity repos);
+    void updateJob(JobEntity repos);
 
     /*
      * delete the object from database
-     * @param Employee, object to be deleted
+     * @param Job, object to be deleted
      */
     @Delete
-    void deleteEmployee(EmployeeEntity Employee);
+    void deleteJob(JobEntity Job);
 
-    // Employee... is varargs, here Employee is an array
+    // Job... is varargs, here Job is an array
     /*
      * delete list of objects from database
-     * @param Employee, array of oject to be deleted
+     * @param Job, array of oject to be deleted
      */
     @Delete
-    void deleteEmployee(EmployeeEntity... Employee);
+    void deleteJob(JobEntity... Job);
 
    /* @Query("SELECT * FROM user WHERE first_name LIKE :search " +
             "OR last_name LIKE :search")
