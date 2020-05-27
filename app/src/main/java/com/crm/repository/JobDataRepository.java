@@ -43,7 +43,7 @@ public class JobDataRepository {
         return mJobDao.listAllJobs();
     }
 
-    public MutableLiveData<List<JobEntity>> getSearchResults() {
+    public MutableLiveData<List<JobEntity>> getJobSearchResults() {
         return searchResults;
     }
 
@@ -122,7 +122,7 @@ public class JobDataRepository {
         protected Void doInBackground(JobEntity... jobs) {
             mDao.insertJob(jobs[0]);
             return null;
-        }
+    }
 
     }
 

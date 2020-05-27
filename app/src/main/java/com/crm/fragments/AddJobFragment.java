@@ -6,6 +6,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -22,6 +23,7 @@ import com.crm.databinding.FragmentAddJobBinding;
 import com.crm.viewmodel.JobListViewModel;
 
 import java.util.Calendar;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -35,21 +37,9 @@ import androidx.navigation.Navigation;
 public class AddJobFragment extends Fragment implements View.OnClickListener, DatePickerFragment.IUpdateDate {
     private final static String TAG = AddJobFragment.class.getName();
 
-    private  String[] country;
-    private  String[] names;
-    private  String[] states;
     private AddressUtils mAddressUtils;
-
-    final Calendar myCalendar = Calendar.getInstance();
-    private int mYear, mMonth, mDay;
-
     private JobEntity job;
-
-
-
     private JobListViewModel mViewModel;
-
-    private EmployeeDatabase employeeDatabase;
     private FragmentAddJobBinding mAddJobBinding;
 
     @Nullable
@@ -126,37 +116,30 @@ public class AddJobFragment extends Fragment implements View.OnClickListener, Da
                 newFragment.show(getChildFragmentManager(), "datePicker");
             }
         });
-        mAddJobBinding.contentAddJob.countryPickerSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        getActivity(),android.R.layout.simple_list_item_1 ,mAddressUtils.getCountryList());
-                mAddJobBinding.contentAddJob.countryPickerSearch.setThreshold(0);//will start working from first character
-                mAddJobBinding.contentAddJob.countryPickerSearch.setAdapter(adapter);
-            }
-        });
-
-        mAddJobBinding.contentAddJob.cityPickerSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        getActivity(),android.R.layout.simple_list_item_1 ,mAddressUtils.getCityList());
-                mAddJobBinding.contentAddJob.cityPickerSearch.setThreshold(0);//will start working from first character
-
-                mAddJobBinding.contentAddJob.cityPickerSearch.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
-            }
-        });
-
-        mAddJobBinding.contentAddJob.statePickerSearch.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        getActivity(),android.R.layout.simple_list_item_1 ,mAddressUtils.getStateList());
-                mAddJobBinding.contentAddJob.statePickerSearch.setThreshold(0);//will start working from first character
-                mAddJobBinding.contentAddJob.statePickerSearch.setAdapter(adapter);
-            }
-        });
+        mAddJobBinding.contentAddJob.countryPickerSearch.setOnFocusChangeListener(
+                onFocusChangeListener(mAddJobBinding.contentAddJob.countryPickerSearch, mAddressUtils.getCountryList()));
+        mAddJobBinding.contentAddJob.cityPickerSearch.setOnFocusChangeListener(
+                onFocusChangeListener(mAddJobBinding.contentAddJob.cityPickerSearch, mAddressUtils.getCityList()));
+        mAddJobBinding.contentAddJob.statePickerSearch.setOnFocusChangeListener(
+                onFocusChangeListener(mAddJobBinding.contentAddJob.statePickerSearch, mAddressUtils.getStateList()));
     }
+
+    private View.OnFocusChangeListener onFocusChangeListener(AutoCompleteTextView view, List<String> list) {
+        View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                ArrayAdapter<String> adapter = new ArrayAdapter<>(
+                        getActivity(), android.R.layout.simple_list_item_1, list);
+
+                view.setThreshold(0);//will start working from first character
+                view.setAdapter(adapter);
+            }
+        };
+        return focusChangeListener;
+    }
+
+
+
 
     @Override
     public void setDate(View view, String date) {

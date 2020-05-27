@@ -13,13 +13,17 @@ import java.io.InputStreamReader;
 import java.io.StringWriter;
 import java.io.Writer;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AddressUtils {
 
     private static AddressUtils sInstance;
-    private  String[] mCountryList;
-    private  String[] mCityList;
-    private  String[] mStateList;
+    private List<String> mCountryList;
+    private List<String> mCityList;
+    private  List<String> mStateList;
     private Context mContext;
     private static final String TAG = AddressUtils.class.getName();
     private AddressUtils() {
@@ -45,15 +49,17 @@ public class AddressUtils {
         String response = readJsonFile(inputStream);
         Gson gson = new Gson();
         Address[] cityArray = gson.fromJson(response, Address[].class);
-        mCountryList = new String[1];
-        mStateList = new String[cityArray.length];
-        mCityList = new String[cityArray.length];
+        mCountryList = new ArrayList<>(1);
+//        String[] stateList = new String[cityArray.length];
+        List<String> stateList = new ArrayList<>(cityArray.length);
+        mCityList = new ArrayList<>(cityArray.length);
 
         for(int i=0; i<cityArray.length; i++) {
-            mCityList[i] = cityArray[i].getName();
-            mStateList[i] = cityArray[i].getState();
+            mCityList.add(cityArray[i].getName());
+            stateList.add(cityArray[i].getState());
         }
-        mCountryList[0] = "India";
+        mStateList = stateList.stream().distinct().collect(Collectors.toList());
+        mCountryList.add("India");
     }
 
     private  String readJsonFile(InputStream inputStream) {
@@ -79,15 +85,15 @@ public class AddressUtils {
         return jsonString;
     }
 
-    public String[] getCountryList() {
+    public List<String> getCountryList() {
         return mCountryList;
     }
 
-    public String[] getCityList() {
+    public List<String> getCityList() {
         return mCityList;
     }
 
-    public String[] getStateList() {
+    public List<String> getStateList() {
         return mStateList;
     }
 }

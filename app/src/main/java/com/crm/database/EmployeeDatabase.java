@@ -7,9 +7,11 @@ import android.util.Log;
 
 import com.crm.Utils.Constants;
 import com.crm.Utils.DateRoomConverter;
+import com.crm.database.dao.ClientDao;
 import com.crm.database.dao.ClientGroupDao;
 import com.crm.database.dao.EmployeeDao;
 import com.crm.database.dao.JobDao;
+import com.crm.database.entity.ClientEntity;
 import com.crm.database.entity.ClientGroupEntity;
 import com.crm.database.entity.EmployeeEntity;
 import com.crm.database.entity.JobEntity;
@@ -24,7 +26,7 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = { EmployeeEntity.class, JobEntity.class, ClientGroupEntity.class}, version = 12)
+@Database(entities = { EmployeeEntity.class, JobEntity.class, ClientGroupEntity.class, ClientEntity.class}, version =17)
 @TypeConverters({DateRoomConverter.class})
 public abstract class EmployeeDatabase extends RoomDatabase {
 
@@ -32,7 +34,7 @@ public abstract class EmployeeDatabase extends RoomDatabase {
     public abstract EmployeeDao getEmployeeDao();
     public abstract JobDao getJobDao();
     public abstract ClientGroupDao getClientGroupDao();
-
+    public abstract ClientDao getClientDao();
     private static EmployeeDatabase sEmployeeDBInstance;
 
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();
@@ -66,7 +68,7 @@ public abstract class EmployeeDatabase extends RoomDatabase {
                     super.onOpen(db);
                     new PopulateDbAsync(sEmployeeDBInstance).execute();
                     new PopulateJobAsync(sEmployeeDBInstance).execute();
-                    new PopulateClientGroupAsync(sEmployeeDBInstance).execute();
+//                    new PopulateClientGroupAsync(sEmployeeDBInstance).execute();
                 }
             };
 
@@ -110,7 +112,7 @@ public abstract class EmployeeDatabase extends RoomDatabase {
 
     /**
      * Populate the Employee database in the background.
-     */
+     *//*
     private static class PopulateClientGroupAsync extends AsyncTask<Void, Void, Void> {
 
         private final ClientGroupDao mDao;
@@ -125,7 +127,7 @@ public abstract class EmployeeDatabase extends RoomDatabase {
             mDao.listAllClientGroups();
             return null;
         }
-    }
+    }*/
 
 
     private static RoomDatabase.Callback getJobDataCallback =

@@ -40,7 +40,7 @@ public class JobListViewModel extends AndroidViewModel {
         super(application);
         mRepository = new JobDataRepository(application);
         mAllJobs = mRepository.listAllJobs();
-        searchResults = mRepository.getSearchResults();
+        searchResults = mRepository.getJobSearchResults();
     }
 
 

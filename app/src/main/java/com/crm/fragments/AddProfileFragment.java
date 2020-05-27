@@ -23,6 +23,7 @@ import com.crm.databinding.FragmentAddProfileBinding;
 import com.crm.viewmodel.EmployeeListViewModel;
 
 import java.util.Calendar;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,7 +56,6 @@ public class AddProfileFragment extends Fragment implements DatePickerFragment.I
 
 
     final Calendar myCalendar = Calendar.getInstance();
-    private int mYear, mMonth, mDay;
 
     private EmployeeEntity employee;
 
@@ -97,9 +97,6 @@ public class AddProfileFragment extends Fragment implements DatePickerFragment.I
         stateSpinner = mProfileBinding.contentAddProfile.statePickerSearch;
         doj = mProfileBinding.contentAddProfile.doj;
         dob = mProfileBinding.contentAddProfile.dob;
-        mYear = myCalendar.get(Calendar.YEAR);
-        mMonth = myCalendar.get(Calendar.MONTH);
-        mDay = myCalendar.get(Calendar.DAY_OF_MONTH);
         employeeDatabase = EmployeeDatabase.getInstance(getActivity());
         saveButton = mProfileBinding.contentAddProfile.saveButton;
     }
@@ -139,36 +136,26 @@ public class AddProfileFragment extends Fragment implements DatePickerFragment.I
             }
         });
 
-        countrySpinner.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+        mProfileBinding.contentAddProfile.countryPickerSearch.setOnFocusChangeListener(
+                onFocusChangeListener(mProfileBinding.contentAddProfile.countryPickerSearch, mAddressUtils.getCountryList()));
+        mProfileBinding.contentAddProfile.cityPickerSearch.setOnFocusChangeListener(
+                onFocusChangeListener(mProfileBinding.contentAddProfile.cityPickerSearch, mAddressUtils.getCityList()));
+        mProfileBinding.contentAddProfile.statePickerSearch.setOnFocusChangeListener(
+                onFocusChangeListener(mProfileBinding.contentAddProfile.statePickerSearch, mAddressUtils.getStateList()));
+    }
+
+    private View.OnFocusChangeListener onFocusChangeListener(AutoCompleteTextView view, List<String> list) {
+        View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
                 ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        getActivity(),android.R.layout.simple_list_item_1 ,mAddressUtils.getCountryList());
-                countrySpinner.setThreshold(0);//will start working from first character
-                countrySpinner.setAdapter(adapter);
-            }
-        });
+                        getActivity(), android.R.layout.simple_list_item_1, list);
 
-        citySpinner.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        getActivity(),android.R.layout.simple_list_item_1 ,mAddressUtils.getCityList());
-                citySpinner.setThreshold(0);//will start working from first character
-
-                citySpinner.setAdapter(adapter);//setting the adapter data into the AutoCompleteTextView
+                view.setThreshold(0);//will start working from first character
+                view.setAdapter(adapter);
             }
-        });
-
-        stateSpinner.setOnFocusChangeListener(new View.OnFocusChangeListener() {
-            @Override
-            public void onFocusChange(View v, boolean hasFocus) {
-                ArrayAdapter<String> adapter = new ArrayAdapter<>(
-                        getActivity(),android.R.layout.simple_list_item_1 ,mAddressUtils.getStateList());
-                stateSpinner.setThreshold(0);//will start working from first character
-                stateSpinner.setAdapter(adapter);
-            }
-        });
+        };
+        return focusChangeListener;
     }
 
     @Override

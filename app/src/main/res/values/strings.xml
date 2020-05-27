@@ -185,4 +185,16 @@
     <string name="survey_date">Survey Date</string>
     <string name="follow_up_meeting">Follow Up Meeting</string>
     <string name="next_contact_person">Next Contact Person</string>
+    <string name="reference">Reference</string>
+    <string name="cold_call">Cold Call</string>
+    <string name="reference_emp_id">Reference Employee id</string>
+
+    <string name="service_1">Service A</string>
+    <string name="service_2">Service B</string>
+    <string name="service_3">Service C</string>
+    <string name="service_4">Service D</string>
+    <string name="service_5">Service E</string>
+
+    <string name="interested">Interested</string>
+    <string name="not_interested">Not interested</string>
 </resources>
