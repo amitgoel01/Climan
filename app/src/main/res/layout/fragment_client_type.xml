@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="@dimen/layout_padding">
+
+        <include
+            android:id="@+id/tool_bar"
+            layout="@layout/main_tool_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+
+        <LinearLayout
+            android:id="@+id/client_group_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="110dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/new_client"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/new_client" />
+
+            <RadioButton
+                android:id="@+id/follow_up_client"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/follow_up_client" />
+
+            <include
+                android:id="@+id/follow_up_client_view"
+                layout="@layout/item_text_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/existing_client"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/existing_client" />
+
+            <include
+                android:id="@+id/existing_client_view"
+                layout="@layout/item_text_button"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <RadioButton
+                android:id="@+id/my_clients"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/my_client" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/client_list_view"
+                android:visibility="gone"
+                android:paddingLeft="@dimen/layout_padding"
+                android:paddingRight="@dimen/layout_padding"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+        </LinearLayout>
+
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

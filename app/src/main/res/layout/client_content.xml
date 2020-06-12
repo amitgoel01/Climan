@@ -106,9 +106,82 @@
                     app:layout_constraintRight_toRightOf="parent"
                     app:layout_constraintTop_toBottomOf="@id/line2">
 
-                    <include
-                        android:id="@+id/client_person_detail"
-                        layout="@layout/client_person_details" />
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/NormalText">
+                        <EditText
+                            android:id="@+id/client_address_first_line"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/client_address_first_line"
+                            android:inputType="text"> </EditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/NormalText">
+                        <EditText
+                            android:id="@+id/client_address_second_line"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:hint="@string/client_address_second_line"
+                            android:inputType="text"> </EditText>
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        style="@style/NormalText">
+                        <AutoCompleteTextView
+                            android:id="@+id/country_picker_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:hint="@string/country" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+
+                        android:layout_height="wrap_content"
+                        style="@style/NormalText">
+                        <AutoCompleteTextView
+                            android:id="@+id/city_picker_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:hint="@string/city"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/NormalText">
+                        <AutoCompleteTextView
+                            android:id="@+id/state_picker_search"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:hint="@string/state" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        style="@style/NormalText">
+                        <AutoCompleteTextView
+                            android:id="@+id/pincode"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:maxLines="1"
+                            android:hint="@string/pin_code" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+
 
 
                     <TextView
@@ -144,322 +217,15 @@
                         android:background="@color/profileEditTextColor" />
 
 
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/NormalText"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/reference_emp_id"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:hint="@string/reference_emp_id"
-                            android:inputType="text"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/NormalText"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/date_of_contact"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:hint="@string/date_of_contact"
-                            android:inputType="text"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/service_required"
-                        style="@style/NormalText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/service_required"
-                        android:textSize="18sp" />
-
-                    <CheckBox
-                        android:id="@+id/service1"
-                        style="@style/RadioButtonTheme2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/service_1" />
-
-                    <CheckBox
-                        android:id="@+id/service2"
-                        style="@style/RadioButtonTheme2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/service_2" />
-
-                    <CheckBox
-                        android:id="@+id/service3"
-                        style="@style/RadioButtonTheme2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/service_3" />
-
-                    <CheckBox
-                        android:id="@+id/service4"
-                        style="@style/RadioButtonTheme2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/service_4" />
-
-                    <CheckBox
-                        android:id="@+id/service5"
-                        style="@style/RadioButtonTheme2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/service_5" />
-
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/profileEditTextColor" />
-
-                    <!--  <com.google.android.material.textfield.TextInputLayout
-                        android:layout_width="match_parent"
-
-                        android:layout_height="wrap_content"
-                        style="@style/NormalText">
-                        <AutoCompleteTextView
-                            android:id="@+id/service_required"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:maxLines="1"
-                            android:hint="@string/service_required" />
-                    </com.google.android.material.textfield.TextInputLayout>-->
-
-
-                  <!--  <com.google.android.material.textfield.TextInputLayout
-                        style="@style/NormalText"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/status"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/status"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>-->
-
-                    <TextView
-                        android:id="@+id/status"
-                        style="@style/NormalText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/status"
-                        android:textSize="18sp" />
-
-
-                    <RadioGroup
-                        android:id="@+id/status_selection"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/interested"
-                            style="@style/RadioButtonTheme2"
-                            android:checked="true"
-                            android:text="@string/interested" />
-
-                        <RadioButton
-                            android:id="@+id/not_interested"
-                            style="@style/RadioButtonTheme2"
-                            android:text="@string/not_interested" />
-                    </RadioGroup>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/profileEditTextColor" />
-
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/NormalText"
-
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <AutoCompleteTextView
-                            android:id="@+id/comments"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/comments"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/NormalText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/meeting_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:hint="@string/next_meeting_date"
-                            android:inputType="text"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/NormalText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/meeting_time"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:hint="@string/next_meeting_time"
-                            android:inputType="text"
-                            android:maxLines="1" />
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/next_contact_person"
-                        style="@style/NormalText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/next_contact_person"
-                        android:textSize="18sp" />
-
-                    <RadioGroup
-                        android:id="@+id/next_contact_person_selection"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/self"
-                            style="@style/RadioButtonTheme2"
-                            android:checked="true"
-                            android:text="@string/self" />
-
-                        <RadioButton
-                            android:id="@+id/other"
-                            style="@style/RadioButtonTheme2"
-                            android:text="@string/other_person" />
-                    </RadioGroup>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:background="@color/profileEditTextColor" />
-
                     <include
+                        android:id="@+id/client_person_detail"
+                        layout="@layout/client_person_details" />
+
+
+                   <!-- <include
                         android:id="@+id/client_person_detail2"
                         layout="@layout/client_person_details"
-                        android:visibility="gone"/>
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/NormalText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/meeting_outcome"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:hint="@string/meeting_outcome"
-                            android:inputType="text"></EditText>
-                    </com.google.android.material.textfield.TextInputLayout>
-
-                    <TextView
-                        android:id="@+id/follow_up_meeting"
-                        style="@style/NormalText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/follow_up_meeting"
-                        android:textSize="18sp" />
-
-                    <RadioGroup
-                        android:id="@+id/follow_up_meeting_selection"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/yes"
-                            style="@style/RadioButtonTheme2"
-                            android:checked="true"
-                            android:text="@string/yes" />
-
-                        <RadioButton
-                            android:id="@+id/no"
-                            style="@style/RadioButtonTheme2"
-                            android:text="@string/no" />
-                    </RadioGroup>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="4dp"
-                        android:background="@color/profileEditTextColor" />
-
-                    <TextView
-                        android:id="@+id/survey_done"
-                        style="@style/NormalText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:hint="@string/survey_done"
-                        android:textSize="18sp" />
-
-                    <RadioGroup
-                        android:id="@+id/survey_done_selection"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="5dp"
-                        android:orientation="horizontal">
-
-                        <RadioButton
-                            android:id="@+id/radio_yes"
-                            style="@style/RadioButtonTheme2"
-                            android:checked="true"
-                            android:text="@string/yes" />
-
-                        <RadioButton
-                            android:id="@+id/radio_no"
-                            style="@style/RadioButtonTheme2"
-                            android:text="@string/no" />
-                    </RadioGroup>
-
-                    <View
-                        android:layout_width="match_parent"
-                        android:layout_height="1dp"
-                        android:layout_marginTop="4dp"
-                        android:background="@color/profileEditTextColor" />
-
-                    <com.google.android.material.textfield.TextInputLayout
-                        style="@style/NormalText"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <EditText
-                            android:id="@+id/survey_date"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:focusable="false"
-                            android:hint="@string/survey_date"
-                            android:inputType="text"></EditText>
-                    </com.google.android.material.textfield.TextInputLayout>
+                        android:visibility="gone"/>-->
 
 
                     <Button

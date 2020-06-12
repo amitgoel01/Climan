@@ -26,6 +26,10 @@ public interface ClientDao {
             " ORDER BY " + Constants.CLIENT_ID + " DESC " + " LIMIT " + 1)
     List<ClientEntity> findClientWithId(String salesPersonId);
 
+    @Query("SELECT * FROM " + Constants.TABLE_CLIENT + " WHERE " + Constants.SALES_PERSON_ID + " = :salesPersonId" +
+            " ORDER BY " + Constants.CLIENT_ID + " DESC ")
+    List<ClientEntity> findAllClientWithId(String salesPersonId);
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertAll(List<ClientEntity> employeeList);
 

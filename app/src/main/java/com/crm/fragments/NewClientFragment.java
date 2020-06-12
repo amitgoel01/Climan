@@ -13,7 +13,6 @@ import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
@@ -23,19 +22,19 @@ import android.widget.Toast;
 import com.crm.R;
 import com.crm.Utils.AddressUtils;
 import com.crm.Utils.DatePickerFragment;
+import com.crm.adapters.ClientItemAdapter;
 import com.crm.database.EmployeeDatabase;
 import com.crm.database.entity.ClientGroupEntity;
 import com.crm.database.entity.ClientEntity;
+import com.crm.database.entity.ClientPersonEntity;
 import com.crm.databinding.FragmentClientBinding;
-import com.crm.model.PersonalDetails;
 import com.crm.viewmodel.ClientGroupViewModel;
+import com.crm.viewmodel.ClientPersonViewModel;
 import com.crm.viewmodel.ClientViewModel;
 
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -48,11 +47,12 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProviders;
 import androidx.navigation.Navigation;
 
-public class ClientFragment extends Fragment implements View.OnClickListener, DatePickerFragment.IUpdateDate {
-    private final static String TAG = ClientFragment.class.getName();
+public class NewClientFragment extends Fragment implements View.OnClickListener, DatePickerFragment.IUpdateDate {
+    private final static String TAG = NewClientFragment.class.getName();
 //    private TextView clientGroupSpinner;
     private ClientGroupViewModel mClientGroupViewModel;
     private ClientViewModel mClientViewModel;
+    private ClientPersonViewModel mClientPersonViewModel;
     private FragmentClientBinding mClientBinding;
     private List<ClientGroupEntity> mClientGroupList = new ArrayList<>();
     private List<String> clientGroupList = new ArrayList<>();
@@ -60,12 +60,15 @@ public class ClientFragment extends Fragment implements View.OnClickListener, Da
     private Dialog dialog;
     private AddressUtils mAddressUtils;
     private EmployeeDatabase employeeDatabase;
+    private ClientItemAdapter adapter;
+    private List<ClientEntity> mSearchList = new ArrayList<>();
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         mClientBinding = FragmentClientBinding.inflate(inflater, container, false);
         mClientGroupViewModel = ViewModelProviders.of(this).get(ClientGroupViewModel.class);
         mClientViewModel = ViewModelProviders.of(this).get(ClientViewModel.class);
+        mClientPersonViewModel = ViewModelProviders.of(this).get(ClientPersonViewModel.class);
         setUpViews();
         setToolbar();
         setClickListeners();
@@ -113,6 +116,7 @@ public class ClientFragment extends Fragment implements View.OnClickListener, Da
         mClientGroupViewModel.listAllClients().observe(getActivity(), new Observer<List<ClientGroupEntity>>() {
             @Override
             public void onChanged(List<ClientGroupEntity> clientGroupEntityList) {
+                Log.d(TAG, "getAllGroupClients ClientGroupViewModel.listAllClients():  " + clientGroupEntityList.size());
                 mClientGroupList = clientGroupEntityList;
                 for(int i=0; i< mClientGroupList.size(); i++) {
                     clientGroupList.add(mClientGroupList.get(i).getClientGroupName());
@@ -125,12 +129,17 @@ public class ClientFragment extends Fragment implements View.OnClickListener, Da
         mClientViewModel.listAllClients().observe(getActivity(), new Observer<List<ClientEntity>>() {
             @Override
             public void onChanged(List<ClientEntity> clientEntityList) {
-                Log.d(TAG, "clientEntityList size:  " + clientEntityList.size());
+                Log.d(TAG, "getAddClientObserver clientEntityList size:  " + clientEntityList.size());
                 mClientViewModel.getSearchResults().observe(getActivity(), new Observer<List<ClientEntity>>() {
                             @Override
                             public void onChanged(List<ClientEntity> searchResults) {
-                                Toast.makeText(getContext(), "client is added succesfully added \n Note your client id:  "
-                                        + "c"+ searchResults.get(0).getClientId(), Toast.LENGTH_LONG).show();
+                                if(searchResults.size() > 0) {
+                                    Long clientId = searchResults.get(0).getClientId();
+
+                                    mClientPersonViewModel.updateClientPersonId(1L, searchResults.get(0).getClientId());
+                                   Toast.makeText(getContext(), "client is added succesfully added \n Note your client id:  "
+                                            + "c" + searchResults.get(0).getClientId() + "  clieint Id:  "  +clientId, Toast.LENGTH_LONG).show();
+                                }
                             }
                         });
 
@@ -138,6 +147,8 @@ public class ClientFragment extends Fragment implements View.OnClickListener, Da
             }
         });
     }
+
+
 
     private View.OnFocusChangeListener onFocusChangeListener(AutoCompleteTextView view, List<String> list) {
         View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
@@ -157,7 +168,7 @@ public class ClientFragment extends Fragment implements View.OnClickListener, Da
         View.OnClickListener onClickListener = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DialogFragment newFragment = new DatePickerFragment(ClientFragment.this, view);
+                DialogFragment newFragment = new DatePickerFragment(NewClientFragment.this, view);
                 newFragment.show(getChildFragmentManager(), "datePicker");
             }
         };
@@ -175,7 +186,7 @@ public class ClientFragment extends Fragment implements View.OnClickListener, Da
                         new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
-                                mClientBinding.clientContent.meetingTime.setText(hourOfDay + ":" + minute);
+                                mClientBinding.clientContent.clientPersonDetail.nextMeetingTime.setText(hourOfDay + ":" + minute);
                             }
                         }, hour, minutes, true);
                 picker.show();
@@ -187,102 +198,131 @@ public class ClientFragment extends Fragment implements View.OnClickListener, Da
 
     private void setClickListeners() {
         mClientBinding.clientContent.clientGroupId.setOnClickListener(this);
-        mClientBinding.clientContent.clientPersonDetail.countryPickerSearch.setOnFocusChangeListener(
-                onFocusChangeListener(mClientBinding.clientContent.clientPersonDetail.countryPickerSearch, mAddressUtils.getCountryList()));
-        mClientBinding.clientContent.clientPersonDetail.cityPickerSearch.setOnFocusChangeListener(
-                onFocusChangeListener(mClientBinding.clientContent.clientPersonDetail.cityPickerSearch, mAddressUtils.getCityList()));
-        mClientBinding.clientContent.clientPersonDetail.statePickerSearch.setOnFocusChangeListener(
-                onFocusChangeListener(mClientBinding.clientContent.clientPersonDetail.statePickerSearch, mAddressUtils.getStateList()));
+        mClientBinding.clientContent.countryPickerSearch.setOnFocusChangeListener(
+                onFocusChangeListener(mClientBinding.clientContent.countryPickerSearch, mAddressUtils.getCountryList()));
+        mClientBinding.clientContent.cityPickerSearch.setOnFocusChangeListener(
+                onFocusChangeListener(mClientBinding.clientContent.cityPickerSearch, mAddressUtils.getCityList()));
+        mClientBinding.clientContent.statePickerSearch.setOnFocusChangeListener (
+                onFocusChangeListener(mClientBinding.clientContent.statePickerSearch, mAddressUtils.getStateList()));
 
-        mClientBinding.clientContent.clientPersonDetail2.countryPickerSearch.setOnFocusChangeListener(
-                onFocusChangeListener(mClientBinding.clientContent.clientPersonDetail2.countryPickerSearch,
-                        mAddressUtils.getCountryList()));
-        mClientBinding.clientContent.clientPersonDetail2.cityPickerSearch.setOnFocusChangeListener(
-                onFocusChangeListener(mClientBinding.clientContent.clientPersonDetail2.cityPickerSearch,
-                        mAddressUtils.getCityList()));
-        mClientBinding.clientContent.clientPersonDetail2.statePickerSearch.setOnFocusChangeListener(
-                onFocusChangeListener(mClientBinding.clientContent.clientPersonDetail2.statePickerSearch,
-                        mAddressUtils.getStateList()));
+        mClientBinding.clientContent.clientPersonDetail.dateOfContact.setOnClickListener(datePickerClick
+                (mClientBinding.clientContent.clientPersonDetail.dateOfContact));
 
-        mClientBinding.clientContent.surveyDate.setOnClickListener(datePickerClick
-                (mClientBinding.clientContent.surveyDate));
-        mClientBinding.clientContent.dateOfContact.setOnClickListener(datePickerClick
-                (mClientBinding.clientContent.dateOfContact));
-        mClientBinding.clientContent.meetingDate.setOnClickListener(datePickerClick
-                (mClientBinding.clientContent.meetingDate));
-        mClientBinding.clientContent.meetingTime.setOnClickListener(timePickerClick());
+        mClientBinding.clientContent.clientPersonDetail.surveyDate.setOnClickListener(datePickerClick
+                (mClientBinding.clientContent.clientPersonDetail.surveyDate));
+        mClientBinding.clientContent.clientPersonDetail.nextMeetingDate.setOnClickListener(datePickerClick
+                (mClientBinding.clientContent.clientPersonDetail.nextMeetingDate));
+        mClientBinding.clientContent.clientPersonDetail.nextMeetingTime.setOnClickListener(timePickerClick());
 
         mClientBinding.clientContent.saveButton.setOnClickListener(this);
-        mClientBinding.goButton.setOnClickListener(this);
+//        mClientBinding.goButton.setOnClickListener(this);
 
-        clientTypeSelection();
-        clientContactPersonSelection();
-        referenceTypeSelection();
-//        statusTypeSelection();
-    }
+//        clientTypeSelection();
 
-    private void clientTypeSelection() {
-        mClientBinding.radioGroup.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+        checkSameOrOther();
+
+        checkClientInterest();
+
+        mClientBinding.clientContent.clientPersonDetail.allService.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton checkedRadioButton = group.findViewById(checkedId);
-                if (checkedRadioButton.getId() == R.id.new_client) {
-                    EditText empId = mClientBinding.clientId;
-                    empId.setVisibility(View.GONE);
-                } else {
-                    EditText empIdText = mClientBinding.clientId;
-                    empIdText.setVisibility(View.VISIBLE);
-                }
+            public void onClick(View v) {
+                mClientBinding.clientContent.clientPersonDetail.service1.setChecked(false);
+                mClientBinding.clientContent.clientPersonDetail.service2.setChecked(false);
+                mClientBinding.clientContent.clientPersonDetail.service3.setChecked(false);
+                mClientBinding.clientContent.clientPersonDetail.service4.setChecked(false);
+                mClientBinding.clientContent.clientPersonDetail.service5.setChecked(false);
             }
         });
     }
 
-    private String getReferenceEmpId() {
-        if(statusTypeSelection(mClientBinding.clientContent.statusSelection).equals(getResources().getString(R.string.self))) {
-            return getResources().getString(R.string.self);
-        }
-        else {
-            return mClientBinding.clientContent.referenceEmpId.getText().toString();
-        }
+    private void checkClientInterest() {
+        mClientBinding.clientContent.clientPersonDetail.statusSelection.setOnCheckedChangeListener(
+                new RadioGroup.OnCheckedChangeListener() {
+                    @Override
+                    public void onCheckedChanged(RadioGroup group, int checkedId) {
+                        switch (checkedId) {
+                            case R.id.interested:
+                                mClientBinding.clientContent.clientPersonDetail.nextPersonOuterLayout.
+                                        setVisibility(View.VISIBLE);
+                                mClientBinding.clientContent.clientPersonDetail.nextContactPersonLayout.
+                                        setVisibility(View.VISIBLE);
+                                break;
+                            case R.id.not_interested:
+                                mClientBinding.clientContent.clientPersonDetail.nextPersonOuterLayout.
+                                        setVisibility(View.GONE);
+                                mClientBinding.clientContent.clientPersonDetail.nextContactPersonLayout.
+                                        setVisibility(View.GONE);
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                }
+        );
     }
+
+/*    private void clientTypeSelection() {
+        mClientBinding.clientContent.clientPersonDetail.nextContactPersonSelection.
+                setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                RadioButton checkedRadioButton = group.findViewById(checkedId);
+                checkSameOrOther();
+               *//* switch (checkedRadioButton.getId()) {
+                    case R.id.new_client:
+                        mClientBinding.clientListView.setVisibility(View.GONE);
+                        mClientBinding.clientId.setVisibility(View.GONE);
+                        break;
+                    case R.id.follow_up_client:
+                        mClientBinding.clientId.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.existing_client:
+                        mClientBinding.clientId.setVisibility(View.VISIBLE);
+                        break;
+                    case R.id.my_clients:
+                        mClientBinding.clientId.setVisibility(View.GONE);
+                        updateMyClientsLists();
+                        break;
+                    default:
+                        break;
+                }*//*
+            }
+        });
+    }*/
+
+
+
 
     private String checkServiceRequired() {
         StringBuilder serviceRequired = new StringBuilder();
-        if(mClientBinding.clientContent.service1.isChecked()) {
-            serviceRequired.append(mClientBinding.clientContent.service1.getText().toString()).append(",");
+
+        if(mClientBinding.clientContent.clientPersonDetail.allService.isChecked()) {
+            return  serviceRequired.append(mClientBinding.clientContent.clientPersonDetail.allService.
+                    getText().toString()).toString();
         }
-        if(mClientBinding.clientContent.service2.isChecked()) {
-            serviceRequired.append(mClientBinding.clientContent.service2.getText().toString()).append(",");
+
+        if(mClientBinding.clientContent.clientPersonDetail.service1.isChecked()) {
+            serviceRequired.append(mClientBinding.clientContent.clientPersonDetail.service1.getText().toString()).append(",");
         }
-        if(mClientBinding.clientContent.service3.isChecked()) {
-            serviceRequired.append(mClientBinding.clientContent.service3.getText().toString()).append(",");
+        if(mClientBinding.clientContent.clientPersonDetail.service2.isChecked()) {
+            serviceRequired.append(mClientBinding.clientContent.clientPersonDetail.service2.getText().toString()).append(",");
         }
-        if(mClientBinding.clientContent.service4.isChecked()) {
-            serviceRequired.append(mClientBinding.clientContent.service4.getText().toString()).append(",");
+        if(mClientBinding.clientContent.clientPersonDetail.service3.isChecked()) {
+            serviceRequired.append(mClientBinding.clientContent.clientPersonDetail.service3.getText().toString()).append(",");
         }
-        if(mClientBinding.clientContent.service5.isChecked()) {
-            serviceRequired.append(mClientBinding.clientContent.service5.getText().toString()).append(",");
+        if(mClientBinding.clientContent.clientPersonDetail.service4.isChecked()) {
+            serviceRequired.append(mClientBinding.clientContent.clientPersonDetail.service4.getText().toString()).append(",");
         }
+        if(mClientBinding.clientContent.clientPersonDetail.service5.isChecked()) {
+            serviceRequired.append(mClientBinding.clientContent.clientPersonDetail.service5.getText().toString()).append(",");
+        }
+
         if(serviceRequired.length() > 0) {
             return serviceRequired.toString().substring(0, serviceRequired.toString().length() - 1);
         }
         else {
             return serviceRequired.toString();
         }
-    }
-
-    private void referenceTypeSelection() {
-        mClientBinding.clientContent.referenceSelection.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton checkedRadioButton = group.findViewById(checkedId);
-                if (checkedRadioButton.getId() == R.id.reference) {
-                    mClientBinding.clientContent.referenceEmpId.setVisibility(View.VISIBLE);
-                } else {
-                    mClientBinding.clientContent.referenceEmpId.setVisibility(View.GONE);
-                }
-            }
-        });
     }
 
    private String statusTypeSelection(RadioGroup radioGroup) {
@@ -292,26 +332,49 @@ public class ClientFragment extends Fragment implements View.OnClickListener, Da
     }
 
 
-    private void clientContactPersonSelection() {
-        mClientBinding.clientContent.nextContactPersonSelection.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
+    private void checkSameOrOther() {
+        mClientBinding.clientContent.clientPersonDetail.nextContactPersonSelection.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
-                RadioButton checkedRadioButton = group.findViewById(checkedId);
-                if (checkedRadioButton.getId() == R.id.self) {
-                    mClientBinding.clientContent.clientPersonDetail2.clientDetailLayout.setVisibility(View.GONE);
-                } else {
-                    mClientBinding.clientContent.clientPersonDetail2.clientDetailLayout.setVisibility(View.VISIBLE);
+                if(checkedId == R.id.not_required) {
+                    mClientBinding.clientContent.clientPersonDetail.nextContactPersonLayout.setVisibility(View.GONE);
+                    return;
                 }
+                mClientBinding.clientContent.clientPersonDetail.nextContactPersonLayout.setVisibility(View.VISIBLE);
+                String name = "";
+                String designation = "";
+                String emailId = "";
+                String phNo = "";
+                String phCode = mClientBinding.clientContent.clientPersonDetail.countryPhoneCode.getText().toString();
+                String officeNumber =  mClientBinding.clientContent.clientPersonDetail.officeNumber.getText().toString();
+                String countryOfficeExtension = "";
+
+                if (checkedId == R.id.same) {
+                    name = mClientBinding.clientContent.clientPersonDetail.clientContactPersonName.getText().toString();
+                    designation = mClientBinding.clientContent.clientPersonDetail.clientDesignation.getText().toString();
+                    emailId = mClientBinding.clientContent.clientPersonDetail.emailId.getText().toString();
+                    phNo =  mClientBinding.clientContent.clientPersonDetail.phoneNumber.getText().toString();
+                    countryOfficeExtension =  mClientBinding.clientContent.clientPersonDetail.officeExtension.getText().toString();
+                }
+                mClientBinding.clientContent.clientPersonDetail.nextClientContactPerson.setText(name);
+                mClientBinding.clientContent.clientPersonDetail.nextClientDesignation.setText(designation);
+                mClientBinding.clientContent.clientPersonDetail.nextEmailId.setText(emailId);
+
+                mClientBinding.clientContent.clientPersonDetail.nextPhoneNumber.setText(phNo);
+
+                mClientBinding.clientContent.clientPersonDetail.nextCountryPhoneCode.setText(phCode);
+                mClientBinding.clientContent.clientPersonDetail.nextOfficeNumber.setText(officeNumber);
+                mClientBinding.clientContent.clientPersonDetail.nextOfficeExtension.setText(countryOfficeExtension);
             }
         });
     }
 
     private String getNextPersonDetail() {
-        if(statusTypeSelection(mClientBinding.clientContent.nextContactPersonSelection).equals(getResources().getString(R.string.self))) {
-            return getResources().getString(R.string.self);
+        if(statusTypeSelection(mClientBinding.clientContent.clientPersonDetail.nextContactPersonSelection).equals(getResources().getString(R.string.same))) {
+            return getResources().getString(R.string.same);
         }
         else {
-            return mClientBinding.clientContent.clientPersonDetail2.clientContactPerson.getText().toString();
+            return mClientBinding.clientContent.clientPersonDetail.nextClientContactPerson.getText().toString();
         }
     }
 
@@ -319,16 +382,12 @@ public class ClientFragment extends Fragment implements View.OnClickListener, Da
     @Override
     public void onClick(View v) {
         switch (v.getId()) {
-            case R.id.go_button:
-                mClientBinding.clientGroupLayout.setVisibility(View.GONE);
-                mClientBinding.layout.setVisibility(View.VISIBLE);
-                break;
             case R.id.client_group_id:
                 dialog = showDialog();
                 dialog.show();
                 break;
             case R.id.save_button:
-                saveClientDetails();
+                saveClientPersonInformation();
                 break;
             default:
                 break;
@@ -336,61 +395,88 @@ public class ClientFragment extends Fragment implements View.OnClickListener, Da
         }
     }
 
-    private void saveClientDetails() {
-         ClientEntity clientEntity = new ClientEntity(mClientBinding.clientContent.clientGroupId.getText().toString(),
-                 mClientBinding.clientContent.clientCompanyName.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.clientContactPerson.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.clientDesignation.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.emailId.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.countryMobileCode.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.phoneNumber.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.countryPhoneCode.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.officeNumber.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.officeExtension.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.clientAddressFirstLine.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.clientAddressSecondLine.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.countryPickerSearch.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.statePickerSearch.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.cityPickerSearch.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail.pinCode.getText().toString(),
-                 statusTypeSelection(mClientBinding.clientContent.referenceSelection),
-                 getReferenceEmpId(),
-                 mClientBinding.clientContent.dateOfContact.getText().toString(),
-                 checkServiceRequired(),
-                 statusTypeSelection(mClientBinding.clientContent.statusSelection),
-                 mClientBinding.clientContent.comments.getText().toString(),
-                 mClientBinding.clientContent.meetingDate.getText().toString(),
-                 mClientBinding.clientContent.meetingTime.getText().toString(),
-                 getNextPersonDetail(),
-                 mClientBinding.clientContent.clientPersonDetail2.clientContactPerson.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.clientDesignation.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.emailId.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.countryMobileCode.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.phoneNumber.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.countryPhoneCode.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.officeNumber.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.officeExtension.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.clientAddressFirstLine.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.clientAddressSecondLine.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.countryPickerSearch.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.statePickerSearch.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.cityPickerSearch.getText().toString(),
-                 mClientBinding.clientContent.clientPersonDetail2.pinCode.getText().toString(),
-                 "hello",
-                 mClientBinding.clientContent.meetingOutcome.getText().toString(),
-                 statusTypeSelection(mClientBinding.clientContent.followUpMeetingSelection),
-                 statusTypeSelection(mClientBinding.clientContent.surveyDoneSelection),
-                 mClientBinding.clientContent.surveyDate.getText().toString(),
-                "amit");
-                /* PersonalDetails.getInstance().getEmpId());*/
-
-         String name = "a";
-//         ClientEntity c1 = new ClientEntity(name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, checkServiceRequired(), name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, name, "amit");
-                 mClientViewModel.insertClient(clientEntity);
 
 
 
+    private void saveClientPersonInformation() {
+//        getNextPersonDetail();
+        ClientPersonEntity clientPersonEntity = new ClientPersonEntity(
+                "id",
+                mClientBinding.clientContent.clientPersonDetail.clientContactPersonName.getText().toString(),
+                mClientBinding.clientContent.clientPersonDetail.clientDesignation.getText().toString(),
+                mClientBinding.clientContent.clientPersonDetail.emailId.getText().toString(),
+
+                mClientBinding.clientContent.clientPersonDetail.countryMobileCode.getText().toString() + "," +
+                        mClientBinding.clientContent.clientPersonDetail.phoneNumber.getText().toString(),
+
+                mClientBinding.clientContent.clientPersonDetail.countryPhoneCode.getText().toString() + "," +
+                        mClientBinding.clientContent.clientPersonDetail.officeNumber.getText().toString() + "," +
+                        mClientBinding.clientContent.clientPersonDetail.officeExtension.getText().toString(),
+
+                "doc",
+                statusTypeSelection(mClientBinding.clientContent.clientPersonDetail.statusSelection),
+                mClientBinding.clientContent.clientPersonDetail.comments.getText().toString(),
+
+                statusTypeSelection(mClientBinding.clientContent.clientPersonDetail.nextContactPersonSelection),
+
+
+                mClientBinding.clientContent.clientPersonDetail.nextClientContactPerson.getText().toString(),
+                mClientBinding.clientContent.clientPersonDetail.nextClientDesignation.getText().toString(),
+                mClientBinding.clientContent.clientPersonDetail.nextEmailId.getText().toString(),
+
+
+                mClientBinding.clientContent.clientPersonDetail.nextCountryMobileCode.getText().toString() + "," +
+                        mClientBinding.clientContent.clientPersonDetail.nextPhoneNumber.getText().toString(),
+
+                mClientBinding.clientContent.clientPersonDetail.nextCountryPhoneCode.getText().toString() + "," +
+                        mClientBinding.clientContent.clientPersonDetail.nextOfficeNumber.getText().toString() + "," +
+                        mClientBinding.clientContent.clientPersonDetail.nextOfficeExtension.getText().toString(),
+
+                mClientBinding.clientContent.clientPersonDetail.nextMeetingDate.getText().toString(),
+                mClientBinding.clientContent.clientPersonDetail.nextMeetingTime.getText().toString(),
+                checkServiceRequired(),
+                statusTypeSelection(mClientBinding.clientContent.clientPersonDetail.surveyDoneSelection),
+                mClientBinding.clientContent.clientPersonDetail.surveyDate.getText().toString(),
+
+        mClientBinding.clientContent.clientPersonDetail.meetingOutcome.getText().toString());
+
+        mClientPersonViewModel.insertClientPerson(clientPersonEntity);
+
+
+
+        mClientPersonViewModel.listAllPersonClients().observe(getActivity(), new Observer<List<ClientPersonEntity>>() {
+            @Override
+            public void onChanged(List<ClientPersonEntity> clientPersonEntities) {
+                Log.d(TAG, "line no 449 clientEntityList size:  " + clientPersonEntities.size());
+                setClientDetails();
+            }
+        });
     }
+
+    private void setClientDetails() {
+        ClientEntity clientEntity = new ClientEntity(
+                mClientBinding.clientContent.clientGroupId.getText().toString(),
+                mClientBinding.clientContent.clientCompanyName.getText().toString(),
+
+                mClientBinding.clientContent.clientAddressFirstLine.getText().toString(),
+                mClientBinding.clientContent.clientAddressSecondLine.getText().toString(),
+
+                mClientBinding.clientContent.countryPickerSearch.getText().toString(),
+                mClientBinding.clientContent.cityPickerSearch.getText().toString(),
+                mClientBinding.clientContent.statePickerSearch.getText().toString(),
+                mClientBinding.clientContent.pincode.getText().toString(),
+                statusTypeSelection(mClientBinding.clientContent.referenceSelection),
+
+                "amit");  //PersonalDetails.getInstance().getEmpId());
+        mClientViewModel.insertClient(clientEntity);
+       /* mClientViewModel.listAllClients().observe(this, new Observer<List<ClientEntity>>() {
+            @Override
+            public void onChanged(List<ClientEntity> clientEntities) {
+                mClientPersonViewModel.updateClientPersonId(1L, mClientId);
+            }
+        });*/
+    }
+
 
     private Dialog showDialog() {
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
@@ -420,6 +506,7 @@ public class ClientFragment extends Fragment implements View.OnClickListener, Da
                 new Observer<List<ClientGroupEntity>>() {
                     @Override
                     public void onChanged(@Nullable final List<ClientGroupEntity> clientGroupEntityList) {
+                        Log.d(TAG, "line no 509 clientEntityList size:  " + clientGroupEntityList.size());
                         if (clientGroupEntityList.size() > 0) { //5
                             message.setVisibility(View.VISIBLE);
                             actionButton.setVisibility(View.VISIBLE);
@@ -459,7 +546,8 @@ public class ClientFragment extends Fragment implements View.OnClickListener, Da
                                            mClientGroupViewModel.listAllClients().observe(getActivity(), new Observer<List<ClientGroupEntity>>() {
                                                @Override
                                                public void onChanged(List<ClientGroupEntity> clientGroupEntityList) {
-                                                   Log.d(TAG, "Size : " + clientGroupEntityList.size() + "  count:  " + count);
+                                                   Log.d(TAG, "line no 548 clientEntityList size:  " + clientGroupEntityList.size()  + "  count:  " + count) ;
+//                                                   Log.d(TAG, "Size : " + clientGroupEntityList.size() + "  count:  " + count);
                                                    if(clientGroupEntityList.size() > count) {
                                                        message.setText(getResources().getString(R.string.client_code_generated));
                                                        clientGroupId.setVisibility(View.VISIBLE);

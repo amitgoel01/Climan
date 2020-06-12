@@ -38,12 +38,15 @@
 
     <fragment
         android:id="@+id/clientFragment"
-        android:name="com.crm.fragments.ClientFragment"
+        android:name="com.crm.fragments.NewClientFragment"
         android:label="ClientFragment" >
 
         <action
             android:id="@+id/action_clientFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_clientFragment_to_clientTypeFragment"
+            app:destination="@id/clientTypeFragment" />
     </fragment>
 
     <fragment
@@ -66,6 +69,9 @@
         <action
             android:id="@+id/action_dashboardFragment_to_searchJobFragment"
             app:destination="@id/searchJobFragment" />
+        <action
+            android:id="@+id/action_dashboardFragment_to_clientTypeFragment"
+            app:destination="@id/clientTypeFragment" />
     </fragment>
     <fragment
         android:id="@+id/addProfileFragment"
@@ -82,6 +88,17 @@
         <action
             android:id="@+id/action_searchJobFragment_to_dashboardFragment"
             app:destination="@id/dashboardFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/clientTypeFragment"
+        android:name="com.crm.fragments.ClientTypeFragment"
+        android:label="ClientTypeFragment" >
+        <action
+            android:id="@+id/action_clientTypeFragment_to_dashboardFragment"
+            app:destination="@id/dashboardFragment" />
+        <action
+            android:id="@+id/action_clientTypeFragment_to_clientFragment"
+            app:destination="@id/clientFragment" />
     </fragment>
 
 </navigation>

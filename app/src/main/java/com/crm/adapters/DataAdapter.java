@@ -27,7 +27,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.BeanHolder> {
     private ListItemBinding mListItemBinding;
 
     public DataAdapter(List<JobEntity> list, Context context) {
-        layoutInflater = LayoutInflater.from(context);
         this.mList = list;
         this.context = context;
 //        this.onEmployeeItemClick = (OnItemClick) context;
@@ -39,8 +38,6 @@ public class DataAdapter extends RecyclerView.Adapter<DataAdapter.BeanHolder> {
 
     @Override
     public BeanHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater =
-                LayoutInflater.from(parent.getContext());
         mListItemBinding = ListItemBinding.inflate(layoutInflater, parent, false);
         return new BeanHolder(mListItemBinding);
        /* View view = layoutInflater.inflate(R.layout.list_item, parent, false);

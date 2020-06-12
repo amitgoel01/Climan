@@ -113,6 +113,7 @@
     <string name="client">Client</string>
     <string name="new_client">New Client</string>
     <string name="existing_client">Existing Client</string>
+    <string name="my_client">My Clients</string>
     <string name="follow_up_client">Follow Up Client</string>
     <string name="client_id">Client ID</string>
     <string name="client_not_available">Client Not Available</string>
@@ -148,6 +149,7 @@
 
     <string name="client_group_name">Client Group Name</string>
     <string name="client_group">Client Group</string>
+    <string name="client_person_details">Client Person Details</string>
     <string name="contact_person">Contact Person</string>
     <string name="client_group_code">Client Group Code</string>
     <string name="client_Company_Name">Client Company Name</string>
@@ -177,8 +179,9 @@
     <string name="client_not_exist">Client Not Exist\n Press Generate to generate Client Group Id</string>
 
     <string name="next_person">Next Person</string>
-    <string name="self">Self</string>
+    <string name="same">Same</string>
     <string name="other_person">other Person</string>
+    <string name="not_required">Not Required</string>
     <string name="next_contact_person_name">Next Contact Person Name</string>
     <string name="meeting_outcome">Meeting Outcome</string>
     <string name="survey_done">Survey Done</string>
@@ -194,6 +197,7 @@
     <string name="service_3">Service C</string>
     <string name="service_4">Service D</string>
     <string name="service_5">Service E</string>
+    <string name="all">All</string>
 
     <string name="interested">Interested</string>
     <string name="not_interested">Not interested</string>

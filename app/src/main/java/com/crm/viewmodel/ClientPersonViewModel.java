@@ -18,8 +18,8 @@ package com.crm.viewmodel;
 
 import android.app.Application;
 
-import com.crm.database.entity.ClientEntity;
-import com.crm.repository.ClientDataRepository;
+import com.crm.database.entity.ClientPersonEntity;
+import com.crm.repository.ClientPersonDataRepository;
 
 import java.util.List;
 
@@ -27,40 +27,44 @@ import androidx.lifecycle.AndroidViewModel;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
-public class ClientViewModel extends AndroidViewModel {
+public class ClientPersonViewModel extends AndroidViewModel {
 
 //    private final SavedStateHandle mSavedStateHandler;
-    private final ClientDataRepository mRepository;
-    private LiveData<List<ClientEntity>> mAllClients;
-    private MutableLiveData<List<ClientEntity>> mClientResults;
-    private MutableLiveData<List<ClientEntity>> searchResults;
+    private final ClientPersonDataRepository mRepository;
+    private LiveData<List<ClientPersonEntity>> mAllPersonClientInformation;
+    private MutableLiveData<List<ClientPersonEntity>> mClientPersonResults;
+    private MutableLiveData<List<ClientPersonEntity>> searchResults;
 
-    public ClientViewModel(Application application) {
+    public ClientPersonViewModel(Application application) {
         super(application);
-        mRepository = new ClientDataRepository(application);
-        mAllClients = mRepository.listAllClients();
+        mRepository = new ClientPersonDataRepository(application);
+        mAllPersonClientInformation = mRepository.listAllClientPersons();
         searchResults = mRepository.getSearchResults();
-        mClientResults = mRepository.getMyClientResults();
+        mClientPersonResults = mRepository.getMyClientResults();
     }
 
 
     /**
      * Expose the LiveData Products query so the UI can observe it.
      */
-    public LiveData<List<ClientEntity>> listAllClients() {
-        return mAllClients;
+    public LiveData<List<ClientPersonEntity>> listAllPersonClients() {
+        return mAllPersonClientInformation;
     }
 
-    public MutableLiveData<List<ClientEntity>> getSearchResults() {
+    public MutableLiveData<List<ClientPersonEntity>> getSearchResults() {
         return searchResults;
     }
 
-    public MutableLiveData<List<ClientEntity>> getClientResults() {
-        return mClientResults;
+    public MutableLiveData<List<ClientPersonEntity>> getClientResults() {
+        return mClientPersonResults;
     }
 
-    public void insertClient(ClientEntity client) {
-        mRepository.insertClient(client);
+    public void insertClientPerson(ClientPersonEntity client) {
+        mRepository.insertClientPerson(client);
+    }
+
+    public void updateClientPersonId(Long cpId, Long clientId) {
+        mRepository.updateClientPersonId(cpId, clientId);
     }
 
     public void findClientWithId(String salesPersonId) {
@@ -71,7 +75,7 @@ public class ClientViewModel extends AndroidViewModel {
         mRepository.findMyClientWithId(salesPersonId);
     }
 
-    public void deleteClient(ClientEntity employee) {
+    public void deleteClient(ClientPersonEntity employee) {
         mRepository.deleteClient(employee);
     }
 

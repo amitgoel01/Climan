@@ -48,8 +48,8 @@ import androidx.recyclerview.widget.RecyclerView;
 
 public class DashboardFragment extends Fragment implements DashboardViewAdapter.ItemListener{
 
-    RecyclerView recyclerView;
-    ArrayList<DataModel> mArrayList;
+    private RecyclerView recyclerView;
+    private ArrayList<DataModel> mArrayList;
     private final String TAG= DashboardFragment.class.getName();
 
     private NavigationView nDrawer;
@@ -105,7 +105,7 @@ public class DashboardFragment extends Fragment implements DashboardViewAdapter.
         DataModel targetOverview = new DataModel(getResources().getString(R.string.target_overview), R.drawable.ic_track_changes_64, colorList.get(6),
                 R.id.action_dashboardFragment_to_addJobFragment);
         DataModel client = new DataModel(getResources().getString(R.string.client), R.drawable.ic_client_64_px, colorList.get(7),
-                R.id.action_dashboardFragment_to_clientFragment);
+                R.id.action_dashboardFragment_to_clientTypeFragment);
         DataModel myTask = new DataModel(getResources().getString(R.string.my_tasks), R.drawable.ic_my_task_64px, colorList.get(8),
                 R.id.action_dashboardFragment_to_addJobFragment);
         DataModel tracking = new DataModel(getResources().getString(R.string.tracking), R.drawable.ic_supervised_user_circle_24px, colorList.get(9),

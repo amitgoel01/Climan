@@ -3,7 +3,7 @@
 <androidx.coordinatorlayout.widget.CoordinatorLayout
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginBottom="20dp">
+    android:layout_marginBottom="@dimen/layout_padding">
 
     <include
         android:id="@+id/tool_bar"
@@ -12,75 +12,10 @@
         android:layout_height="match_parent"/>
 
     <LinearLayout
-        android:id="@+id/client_group_layout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="110dp"
-        android:orientation="vertical">
-
-    <RadioGroup
-        android:id="@+id/radio_group"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:paddingLeft="@dimen/layout_padding"
-        android:paddingRight="@dimen/layout_padding">
-
-        <RadioButton
-            android:id="@+id/new_client"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/new_client" />
-
-        <RadioButton
-            android:id="@+id/follow_up_client"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/follow_up_client" />
-
-        <RadioButton
-            android:id="@+id/existing_client"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/existing_client" />
-
-    </RadioGroup>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            style="@style/NormalText">
-
-            <EditText
-                android:id="@+id/client_id"
-                android:visibility="gone"
-                android:layout_height="wrap_content"
-                android:hint="@string/client_id"
-                android:inputType="text"
-                android:layout_width="match_parent"
-                >
-            </EditText>
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:id="@+id/go_button"
-            android:layout_height="wrap_content"
-            android:text="@string/go"
-            android:textColor="@android:color/black"
-            android:layout_gravity="center"
-            android:layout_marginTop="@dimen/vertical_margin"
-            android:layout_width="wrap_content"
-            android:visibility="visible"
-            >
-        </Button>
-    </LinearLayout>
-
-    <LinearLayout
         android:id="@+id/layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="80dp"
-        android:visibility="gone"
         android:orientation="vertical">
         <include layout="@layout/client_content"
             android:id="@+id/client_content"/>

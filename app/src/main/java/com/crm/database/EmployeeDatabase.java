@@ -9,10 +9,12 @@ import com.crm.Utils.Constants;
 import com.crm.Utils.DateRoomConverter;
 import com.crm.database.dao.ClientDao;
 import com.crm.database.dao.ClientGroupDao;
+import com.crm.database.dao.ClientPersonDao;
 import com.crm.database.dao.EmployeeDao;
 import com.crm.database.dao.JobDao;
 import com.crm.database.entity.ClientEntity;
 import com.crm.database.entity.ClientGroupEntity;
+import com.crm.database.entity.ClientPersonEntity;
 import com.crm.database.entity.EmployeeEntity;
 import com.crm.database.entity.JobEntity;
 import com.crm.model.ClientGroup;
@@ -26,7 +28,8 @@ import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
-@Database(entities = { EmployeeEntity.class, JobEntity.class, ClientGroupEntity.class, ClientEntity.class}, version =17)
+@Database(entities = { EmployeeEntity.class, JobEntity.class, ClientGroupEntity.class,
+        ClientEntity.class, ClientPersonEntity.class}, version =19)
 @TypeConverters({DateRoomConverter.class})
 public abstract class EmployeeDatabase extends RoomDatabase {
 
@@ -35,6 +38,7 @@ public abstract class EmployeeDatabase extends RoomDatabase {
     public abstract JobDao getJobDao();
     public abstract ClientGroupDao getClientGroupDao();
     public abstract ClientDao getClientDao();
+    public abstract ClientPersonDao getClientPersonDao();
     private static EmployeeDatabase sEmployeeDBInstance;
 
     private final MutableLiveData<Boolean> mIsDatabaseCreated = new MutableLiveData<>();

@@ -5,6 +5,7 @@ final public class Constants {
     public static final String TABLE_JOB = "job";
     public static final String TABLE_CLIENT_GROUP = "client_group";
     public static final String TABLE_CLIENT = "client";
+    public static final String TABLE_CLIENT_PERSON = "client_person";
     public static final String DATABASE_NAME = "empdb.db";
     public static final String EMPLOYEE_ID = "empId";
     public static final String EMAIL_ID = "emailId";
@@ -18,5 +19,9 @@ final public class Constants {
 
     public static final String CLIENT_GROUP_NAME = "clientGroupName";
     public static final String CLIENT_ID = "clientId";
+    public static final String CLIENT_PERSON_ID = "cpId";
     public static final String SALES_PERSON_ID = "salesPersonId";
+
+    public static final String ONE = "one";
+    public static final String ALL = "all";
 }

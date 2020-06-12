@@ -3,6 +3,7 @@ package com.crm.repository;
 import android.app.Application;
 import android.os.AsyncTask;
 
+import com.crm.Utils.Constants;
 import com.crm.database.EmployeeDatabase;
 import com.crm.database.dao.ClientDao;
 import com.crm.database.entity.ClientEntity;
@@ -23,6 +24,8 @@ public class ClientDataRepository {
     private LiveData<List<ClientEntity>> mAllClients;
     private MutableLiveData<List<ClientEntity>> searchResults =
             new MutableLiveData<>();
+    private MutableLiveData<List<ClientEntity>> myClientResults =
+            new MutableLiveData<>();
 
     public ClientDataRepository(Application application) {
         EmployeeDatabase db = EmployeeDatabase.getInstance(application);
@@ -34,6 +37,9 @@ public class ClientDataRepository {
         searchResults.setValue(results);
     }
 
+    private void clientAsyncFinished(List<ClientEntity> results) {
+        myClientResults.setValue(results);
+    }
 
     public LiveData<List<ClientEntity>> listAllClients() {
         return mClientDao.listAllClients();
@@ -41,6 +47,10 @@ public class ClientDataRepository {
 
     public MutableLiveData<List<ClientEntity>> getSearchResults() {
         return searchResults;
+    }
+
+    public MutableLiveData<List<ClientEntity>> getMyClientResults() {
+        return myClientResults;
     }
 
     public void insertClient(ClientEntity client) {
@@ -82,6 +92,35 @@ public class ClientDataRepository {
             delegate.asyncFinished(result);
         }
     }
+
+    public void findMyClientWithId(String salesPersonId) {
+        QueryMyClientAsyncTask task = new QueryMyClientAsyncTask(mClientDao);
+        task.delegate = this;
+        task.execute(salesPersonId);
+    }
+
+    private static class QueryMyClientAsyncTask extends
+            AsyncTask<String, Void, List<ClientEntity>> {
+
+        private ClientDao asyncTaskDao;
+        private ClientDataRepository delegate = null;
+
+        QueryMyClientAsyncTask(ClientDao dao) {
+            asyncTaskDao = dao;
+        }
+
+        @Override
+        protected List<ClientEntity> doInBackground(final String... params) {
+            return asyncTaskDao.findAllClientWithId(params[0]);
+        }
+
+
+        @Override
+        protected void onPostExecute(List<ClientEntity> result) {
+            delegate.clientAsyncFinished(result);
+        }
+    }
+
 
     /**
      * Populate the database in the background.
