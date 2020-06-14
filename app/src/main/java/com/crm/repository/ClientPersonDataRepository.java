@@ -58,10 +58,10 @@ public class ClientPersonDataRepository {
         task.execute(client);
     }
 
-    public void updateClientPersonId(Long cpId, Long clientId) {
+    public void updateClientPersonId(String timeStamp, String clientId) {
         UpdateAsyncTask task = new UpdateAsyncTask(mClientPersonDao);
         task.delegate = this;
-        task.execute(cpId, clientId);
+        task.execute(timeStamp, clientId);
     }
 
 
@@ -152,7 +152,7 @@ public class ClientPersonDataRepository {
     /**
      * Populate the database in the background.
      */
-    private static class UpdateAsyncTask extends AsyncTask<Long, Void, Void> {
+    private static class UpdateAsyncTask extends AsyncTask<String, Void, Void> {
 
         private final ClientPersonDao mDao;
         private ClientPersonDataRepository delegate = null;
@@ -162,7 +162,7 @@ public class ClientPersonDataRepository {
 
 
         @Override
-        protected Void doInBackground(Long... clientPersonEntities) {
+        protected Void doInBackground(String... clientPersonEntities) {
             mDao.updateClientPersonId(clientPersonEntities[0], clientPersonEntities[1]);
             return null;
         }

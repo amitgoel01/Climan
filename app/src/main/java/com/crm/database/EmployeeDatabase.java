@@ -29,7 +29,7 @@ import androidx.room.TypeConverters;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 
 @Database(entities = { EmployeeEntity.class, JobEntity.class, ClientGroupEntity.class,
-        ClientEntity.class, ClientPersonEntity.class}, version =19)
+        ClientEntity.class, ClientPersonEntity.class}, version =28)
 @TypeConverters({DateRoomConverter.class})
 public abstract class EmployeeDatabase extends RoomDatabase {
 

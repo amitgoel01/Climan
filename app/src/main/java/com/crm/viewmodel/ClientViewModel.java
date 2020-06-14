@@ -19,6 +19,7 @@ package com.crm.viewmodel;
 import android.app.Application;
 
 import com.crm.database.entity.ClientEntity;
+import com.crm.model.PersonalDetails;
 import com.crm.repository.ClientDataRepository;
 
 import java.util.List;
@@ -34,15 +35,25 @@ public class ClientViewModel extends AndroidViewModel {
     private LiveData<List<ClientEntity>> mAllClients;
     private MutableLiveData<List<ClientEntity>> mClientResults;
     private MutableLiveData<List<ClientEntity>> searchResults;
+    private MutableLiveData<String> mClientId = new MutableLiveData<>();
 
     public ClientViewModel(Application application) {
         super(application);
         mRepository = new ClientDataRepository(application);
-        mAllClients = mRepository.listAllClients();
+        PersonalDetails personalDetails = PersonalDetails.getInstance();
+        personalDetails.setEmpId("amit");
+        mAllClients = mRepository.listAllClients(personalDetails.getEmpId());
         searchResults = mRepository.getSearchResults();
         mClientResults = mRepository.getMyClientResults();
     }
 
+    public LiveData<String> getClientId() {
+        return mClientId;
+    }
+
+    public void setClientId(String clientId) {
+        mClientId.setValue(clientId);
+    }
 
     /**
      * Expose the LiveData Products query so the UI can observe it.
@@ -65,6 +76,10 @@ public class ClientViewModel extends AndroidViewModel {
 
     public void findClientWithId(String salesPersonId) {
         mRepository.findClientWithId(salesPersonId);
+    }
+
+    public void findClientWithClientId(String clientId) {
+        mRepository.findClientWithClientId(clientId);
     }
 
     public void findMyClientWithId(String salesPersonId) {

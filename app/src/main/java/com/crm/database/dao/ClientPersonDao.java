@@ -23,11 +23,15 @@ public interface ClientPersonDao {
     long insertClientPerson(ClientPersonEntity clientPersonEntity);
 
     @Query("UPDATE " + Constants.TABLE_CLIENT_PERSON + " SET " + Constants.CLIENT_ID + " = :clientId" +  " WHERE " +
-            Constants.CLIENT_PERSON_ID + " = :cpId")
-    void updateClientPersonId(Long cpId, Long clientId);
+            Constants.TIME_STAMP + " = :timeStamp")
+    void updateClientPersonId(String timeStamp, String clientId);
 
-    @Query("SELECT * FROM " + Constants.TABLE_CLIENT_PERSON + " WHERE " + Constants.CLIENT_PERSON_ID + " = :clientPersonId" +
+   /* @Query("SELECT * FROM " + Constants.TABLE_CLIENT_PERSON + " WHERE " + Constants.CLIENT_PERSON_ID + " = :clientPersonId" +
             " ORDER BY " + Constants.CLIENT_PERSON_ID + " DESC " + " LIMIT " + 1)
+    List<ClientPersonEntity> findClientWithId(String clientPersonId);*/
+
+    @Query("SELECT * FROM " + Constants.TABLE_CLIENT_PERSON + " WHERE " + Constants.CLIENT_ID+ " = :clientPersonId" +
+            " ORDER BY " + Constants.TIME_STAMP + " ASC " )
     List<ClientPersonEntity> findClientWithId(String clientPersonId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)

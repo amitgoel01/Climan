@@ -11,7 +11,6 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -32,8 +31,10 @@ import com.crm.viewmodel.ClientGroupViewModel;
 import com.crm.viewmodel.ClientPersonViewModel;
 import com.crm.viewmodel.ClientViewModel;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
@@ -62,6 +63,7 @@ public class NewClientFragment extends Fragment implements View.OnClickListener,
     private EmployeeDatabase employeeDatabase;
     private ClientItemAdapter adapter;
     private List<ClientEntity> mSearchList = new ArrayList<>();
+    private String timeStamp;
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -113,14 +115,11 @@ public class NewClientFragment extends Fragment implements View.OnClickListener,
     }
 
     private void getAllGroupClients() {
-        mClientGroupViewModel.listAllClients().observe(getActivity(), new Observer<List<ClientGroupEntity>>() {
-            @Override
-            public void onChanged(List<ClientGroupEntity> clientGroupEntityList) {
-                Log.d(TAG, "getAllGroupClients ClientGroupViewModel.listAllClients():  " + clientGroupEntityList.size());
-                mClientGroupList = clientGroupEntityList;
-                for(int i=0; i< mClientGroupList.size(); i++) {
-                    clientGroupList.add(mClientGroupList.get(i).getClientGroupName());
-                }
+        mClientGroupViewModel.listAllClients().observe(getViewLifecycleOwner(), clientGroupEntityList -> {
+            Log.d(TAG, "getAllGroupClients ClientGroupViewModel.listAllClients():  " + clientGroupEntityList.size());
+            mClientGroupList = clientGroupEntityList;
+            for(int i=0; i< mClientGroupList.size(); i++) {
+                clientGroupList.add(mClientGroupList.get(i).getClientGroupName());
             }
         });
     }
@@ -133,10 +132,11 @@ public class NewClientFragment extends Fragment implements View.OnClickListener,
                 mClientViewModel.getSearchResults().observe(getActivity(), new Observer<List<ClientEntity>>() {
                             @Override
                             public void onChanged(List<ClientEntity> searchResults) {
-                                if(searchResults.size() > 0) {
+                                Log.d(TAG, "timestamp: " + timeStamp);
+                                if(searchResults.size() > 0 && searchResults.get(0).getTimeStamp().equals(timeStamp)) {
                                     Long clientId = searchResults.get(0).getClientId();
 
-                                    mClientPersonViewModel.updateClientPersonId(1L, searchResults.get(0).getClientId());
+                                    mClientPersonViewModel.updateClientPersonId(timeStamp/*searchResults.get(0).getClientId()*/, String.valueOf(searchResults.get(0).getClientId()));
                                    Toast.makeText(getContext(), "client is added succesfully added \n Note your client id:  "
                                             + "c" + searchResults.get(0).getClientId() + "  clieint Id:  "  +clientId, Toast.LENGTH_LONG).show();
                                 }
@@ -387,7 +387,9 @@ public class NewClientFragment extends Fragment implements View.OnClickListener,
                 dialog.show();
                 break;
             case R.id.save_button:
+                timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                 saveClientPersonInformation();
+                Navigation.findNavController(mClientBinding.getRoot()).navigate(R.id.action_clientFragment_to_dashboardFragment);
                 break;
             default:
                 break;
@@ -401,16 +403,15 @@ public class NewClientFragment extends Fragment implements View.OnClickListener,
     private void saveClientPersonInformation() {
 //        getNextPersonDetail();
         ClientPersonEntity clientPersonEntity = new ClientPersonEntity(
-                "id",
                 mClientBinding.clientContent.clientPersonDetail.clientContactPersonName.getText().toString(),
                 mClientBinding.clientContent.clientPersonDetail.clientDesignation.getText().toString(),
                 mClientBinding.clientContent.clientPersonDetail.emailId.getText().toString(),
 
-                mClientBinding.clientContent.clientPersonDetail.countryMobileCode.getText().toString() + "," +
+                mClientBinding.clientContent.clientPersonDetail.countryMobileCode.getText().toString() + " " +
                         mClientBinding.clientContent.clientPersonDetail.phoneNumber.getText().toString(),
 
-                mClientBinding.clientContent.clientPersonDetail.countryPhoneCode.getText().toString() + "," +
-                        mClientBinding.clientContent.clientPersonDetail.officeNumber.getText().toString() + "," +
+                mClientBinding.clientContent.clientPersonDetail.countryPhoneCode.getText().toString() + " " +
+                        mClientBinding.clientContent.clientPersonDetail.officeNumber.getText().toString() + " " +
                         mClientBinding.clientContent.clientPersonDetail.officeExtension.getText().toString(),
 
                 "doc",
@@ -425,11 +426,11 @@ public class NewClientFragment extends Fragment implements View.OnClickListener,
                 mClientBinding.clientContent.clientPersonDetail.nextEmailId.getText().toString(),
 
 
-                mClientBinding.clientContent.clientPersonDetail.nextCountryMobileCode.getText().toString() + "," +
+                mClientBinding.clientContent.clientPersonDetail.nextCountryMobileCode.getText().toString() + " " +
                         mClientBinding.clientContent.clientPersonDetail.nextPhoneNumber.getText().toString(),
 
-                mClientBinding.clientContent.clientPersonDetail.nextCountryPhoneCode.getText().toString() + "," +
-                        mClientBinding.clientContent.clientPersonDetail.nextOfficeNumber.getText().toString() + "," +
+                mClientBinding.clientContent.clientPersonDetail.nextCountryPhoneCode.getText().toString() + " " +
+                        mClientBinding.clientContent.clientPersonDetail.nextOfficeNumber.getText().toString() + " " +
                         mClientBinding.clientContent.clientPersonDetail.nextOfficeExtension.getText().toString(),
 
                 mClientBinding.clientContent.clientPersonDetail.nextMeetingDate.getText().toString(),
@@ -438,35 +439,36 @@ public class NewClientFragment extends Fragment implements View.OnClickListener,
                 statusTypeSelection(mClientBinding.clientContent.clientPersonDetail.surveyDoneSelection),
                 mClientBinding.clientContent.clientPersonDetail.surveyDate.getText().toString(),
 
-        mClientBinding.clientContent.clientPersonDetail.meetingOutcome.getText().toString());
+        mClientBinding.clientContent.clientPersonDetail.meetingOutcome.getText().toString(),
+                timeStamp);
 
         mClientPersonViewModel.insertClientPerson(clientPersonEntity);
 
-
-
-        mClientPersonViewModel.listAllPersonClients().observe(getActivity(), new Observer<List<ClientPersonEntity>>() {
+        setClientDetails();
+       /* mClientPersonViewModel.listAllPersonClients().observe(getActivity(), new Observer<List<ClientPersonEntity>>() {
             @Override
             public void onChanged(List<ClientPersonEntity> clientPersonEntities) {
                 Log.d(TAG, "line no 449 clientEntityList size:  " + clientPersonEntities.size());
                 setClientDetails();
             }
-        });
+        });*/
     }
 
     private void setClientDetails() {
         ClientEntity clientEntity = new ClientEntity(
                 mClientBinding.clientContent.clientGroupId.getText().toString(),
+                mClientBinding.clientContent.clientGroupName.getText().toString(),
                 mClientBinding.clientContent.clientCompanyName.getText().toString(),
 
                 mClientBinding.clientContent.clientAddressFirstLine.getText().toString(),
                 mClientBinding.clientContent.clientAddressSecondLine.getText().toString(),
 
                 mClientBinding.clientContent.countryPickerSearch.getText().toString(),
-                mClientBinding.clientContent.cityPickerSearch.getText().toString(),
                 mClientBinding.clientContent.statePickerSearch.getText().toString(),
+                mClientBinding.clientContent.cityPickerSearch.getText().toString(),
                 mClientBinding.clientContent.pincode.getText().toString(),
                 statusTypeSelection(mClientBinding.clientContent.referenceSelection),
-
+                timeStamp,
                 "amit");  //PersonalDetails.getInstance().getEmpId());
         mClientViewModel.insertClient(clientEntity);
        /* mClientViewModel.listAllClients().observe(this, new Observer<List<ClientEntity>>() {
@@ -482,7 +484,7 @@ public class NewClientFragment extends Fragment implements View.OnClickListener,
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         LayoutInflater inflater = requireActivity().getLayoutInflater();
         int count = mClientGroupList.size();
-        View  view = inflater.inflate(R.layout.item_dialog, null);
+        View  view = inflater.inflate(R.layout.dialog_item, null);
         TextView message = view.findViewById(R.id.client_not_exist);
         TextView clientGroupId = view.findViewById(R.id.clientGroupId);
         Button actionButton = view.findViewById(R.id.create);
@@ -519,7 +521,7 @@ public class NewClientFragment extends Fragment implements View.OnClickListener,
                                 @Override
                                 public void onClick(View v) {
                                     dialog.dismiss();
-                                    mClientBinding.clientContent.clientGroupId.setText(getResources().getString(R.string.client_group_id)+ "g"+Long.toString(clientGroupEntityList.get(0).getClientGroupId()));
+                                    mClientBinding.clientContent.clientGroupId.setText("g"+Long.toString(clientGroupEntityList.get(0).getClientGroupId()));
                                     mClientBinding.clientContent.clientGroupName.setText(clientGroupEntityList.get(clientGroupEntityList.size() - 1).getClientGroupName());
                                     mClientBinding.clientContent.container.setVisibility(View.VISIBLE);
                                 }

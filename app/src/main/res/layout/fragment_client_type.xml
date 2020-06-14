@@ -24,6 +24,7 @@
                 android:id="@+id/new_client"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:includeFontPadding="false"
                 android:text="@string/new_client" />
 
             <RadioButton
@@ -56,11 +57,19 @@
                 android:layout_height="wrap_content"
                 android:text="@string/my_client" />
 
+            <TextView
+                android:id="@+id/textView"
+                android:layout_width="match_parent"
+                android:visibility="gone"
+                android:text="@string/no_client_available"
+                android:padding="@dimen/inside_padding"
+                android:layout_height="wrap_content"/>
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/client_list_view"
                 android:visibility="gone"
-                android:paddingLeft="@dimen/layout_padding"
-                android:paddingRight="@dimen/layout_padding"
+                android:paddingLeft="@dimen/inside_padding"
+                android:paddingRight="@dimen/inside_padding"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"/>
         </LinearLayout>

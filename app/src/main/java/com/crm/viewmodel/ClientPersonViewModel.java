@@ -63,8 +63,8 @@ public class ClientPersonViewModel extends AndroidViewModel {
         mRepository.insertClientPerson(client);
     }
 
-    public void updateClientPersonId(Long cpId, Long clientId) {
-        mRepository.updateClientPersonId(cpId, clientId);
+    public void updateClientPersonId(String timeStamp, String clientId) {
+        mRepository.updateClientPersonId(timeStamp, clientId);
     }
 
     public void findClientWithId(String salesPersonId) {

@@ -7,6 +7,7 @@ import com.crm.Utils.Constants;
 import com.crm.database.EmployeeDatabase;
 import com.crm.database.dao.ClientDao;
 import com.crm.database.entity.ClientEntity;
+import com.crm.model.PersonalDetails;
 
 import java.util.List;
 
@@ -30,7 +31,9 @@ public class ClientDataRepository {
     public ClientDataRepository(Application application) {
         EmployeeDatabase db = EmployeeDatabase.getInstance(application);
         mClientDao = db.getClientDao();
-        mAllClients = mClientDao.listAllClients();
+        PersonalDetails personalDetails = PersonalDetails.getInstance();
+        personalDetails.setEmpId("amit");
+        mAllClients = mClientDao.listAllClients(personalDetails.getEmpId());
     }
 
     private void asyncFinished(List<ClientEntity> results) {
@@ -41,8 +44,8 @@ public class ClientDataRepository {
         myClientResults.setValue(results);
     }
 
-    public LiveData<List<ClientEntity>> listAllClients() {
-        return mClientDao.listAllClients();
+    public LiveData<List<ClientEntity>> listAllClients(String salesPersonId) {
+        return mClientDao.listAllClients(salesPersonId);
     }
 
     public MutableLiveData<List<ClientEntity>> getSearchResults() {
@@ -68,7 +71,13 @@ public class ClientDataRepository {
     public void findClientWithId(String salesPersonId) {
         QueryAsyncTask task = new QueryAsyncTask(mClientDao);
         task.delegate = this;
-        task.execute(salesPersonId);
+        task.execute(Constants.SALES_PERSON_ID, salesPersonId);
+    }
+
+    public void findClientWithClientId(String clientId) {
+        QueryAsyncTask task = new QueryAsyncTask(mClientDao);
+        task.delegate = this;
+        task.execute(Constants.CLIENT_ID, clientId);
     }
 
     private static class QueryAsyncTask extends
@@ -83,7 +92,12 @@ public class ClientDataRepository {
 
         @Override
         protected List<ClientEntity> doInBackground(final String... params) {
-            return asyncTaskDao.findClientWithId(params[0]);
+            if(params[0].equals(Constants.CLIENT_ID)) {
+                return asyncTaskDao.findClientWithClientId(params[1]);
+            }
+            else{
+                return asyncTaskDao.findClientWithId(params[1]);
+            }
         }
 
 
@@ -170,7 +184,7 @@ public class ClientDataRepository {
 
         @Override
         protected Void doInBackground(final Void... params) {
-            mDao.listAllClients();
+//            mDao.listAllClients();
             return null;
         }
     }

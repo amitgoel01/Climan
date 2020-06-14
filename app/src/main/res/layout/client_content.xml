@@ -74,28 +74,6 @@
                         android:inputType="textPersonName" />
                 </com.google.android.material.textfield.TextInputLayout>
 
-                <TextView
-                    android:id="@+id/client_id"
-                    style="@style/NormalText"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/auto_generated"
-                    android:textSize="18sp"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/client_Company_Name_layout" />
-
-                <View
-                    android:id="@+id/line2"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="4dp"
-                    android:background="@color/profileEditTextColor"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/client_id" />
-
-
                 <LinearLayout
                     android:id="@+id/container"
                     android:layout_width="match_parent"
@@ -104,7 +82,7 @@
                     android:visibility="visible"
                     app:layout_constraintLeft_toLeftOf="parent"
                     app:layout_constraintRight_toRightOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/line2">
+                    app:layout_constraintTop_toBottomOf="@id/client_Company_Name_layout">
 
                     <com.google.android.material.textfield.TextInputLayout
                         android:layout_width="match_parent"
@@ -178,6 +156,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:maxLines="1"
+                            android:inputType="number"
                             android:hint="@string/pin_code" />
                     </com.google.android.material.textfield.TextInputLayout>
 

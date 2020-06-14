@@ -6,6 +6,7 @@ public class PersonalDetails {
     private String emailId;
     private String jobTitle;
     private String empId;
+    private String clientId;
 
     private PersonalDetails() {
 
@@ -20,6 +21,14 @@ public class PersonalDetails {
             }
         }
         return sInstance;
+    }
+
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
 
     public String getEmailId() {

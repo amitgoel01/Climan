@@ -11,9 +11,7 @@ public class ClientPersonEntity {
     @PrimaryKey(autoGenerate = true)
     private long cpId; // auto
 
-    private long clientId;
-
-    private String clientPersonId;
+    private String clientId;
 
     @NonNull
     private String cpName;
@@ -79,9 +77,10 @@ public class ClientPersonEntity {
     @NonNull
     private String meetingOutcome;
 
-    public ClientPersonEntity(String clientPersonId, @NonNull String cpName, @NonNull String cpDesignation, @NonNull String cpEmailId, @NonNull String cpMobNo, @NonNull String cpPhNo, @NonNull String doc, @NonNull String cpStatus, @NonNull String cpComments, @NonNull String nextContactPerson, @NonNull String nextClientContactPerson, @NonNull String nextClientDesignation, @NonNull String nextClientEmailId, @NonNull String nextClientMobNo, @NonNull String nextClientPhNo, @NonNull String nextMeetingDate, @NonNull String nextMeetingTime, @NonNull String serviceRequired, @NonNull String surveyDone, @NonNull String surveyDate, @NonNull String meetingOutcome) {
-        this.clientPersonId = clientPersonId;
-        this.cpName = cpName;
+    private String timeStamp;
+
+    public ClientPersonEntity(@NonNull String cpName, @NonNull String cpDesignation, @NonNull String cpEmailId, @NonNull String cpMobNo, @NonNull String cpPhNo, @NonNull String doc, @NonNull String cpStatus, @NonNull String cpComments, @NonNull String nextContactPerson, @NonNull String nextClientContactPerson, @NonNull String nextClientDesignation, @NonNull String nextClientEmailId, @NonNull String nextClientMobNo, @NonNull String nextClientPhNo, @NonNull String nextMeetingDate, @NonNull String nextMeetingTime, @NonNull String serviceRequired, @NonNull String surveyDone, @NonNull String surveyDate, @NonNull String meetingOutcome, String timeStamp) {
+       this.cpName = cpName;
         this.cpDesignation = cpDesignation;
         this.cpEmailId = cpEmailId;
         this.cpMobNo = cpMobNo;
@@ -101,14 +100,7 @@ public class ClientPersonEntity {
         this.surveyDone = surveyDone;
         this.surveyDate = surveyDate;
         this.meetingOutcome = meetingOutcome;
-    }
-
-    public long getClientId() {
-        return clientId;
-    }
-
-    public void setClientId(long clientId) {
-        this.clientId = clientId;
+        this.timeStamp = timeStamp;
     }
 
     public long getCpId() {
@@ -119,13 +111,14 @@ public class ClientPersonEntity {
         this.cpId = cpId;
     }
 
-    public String getClientPersonId() {
-        return clientPersonId;
+    public String getClientId() {
+        return clientId;
     }
 
-    public void setClientPersonId(String clientPersonId) {
-        this.clientPersonId = clientPersonId;
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
     }
+
 
     @NonNull
     public String getCpName() {
@@ -236,24 +229,6 @@ public class ClientPersonEntity {
     }
 
     @NonNull
-    public String getNextMeetingDate() {
-        return nextMeetingDate;
-    }
-
-    public void setNextMeetingDate(@NonNull String nextMeetingDate) {
-        this.nextMeetingDate = nextMeetingDate;
-    }
-
-    @NonNull
-    public String getNextMeetingTime() {
-        return nextMeetingTime;
-    }
-
-    public void setNextMeetingTime(@NonNull String nextMeetingTime) {
-        this.nextMeetingTime = nextMeetingTime;
-    }
-
-    @NonNull
     public String getNextClientMobNo() {
         return nextClientMobNo;
     }
@@ -269,6 +244,24 @@ public class ClientPersonEntity {
 
     public void setNextClientPhNo(@NonNull String nextClientPhNo) {
         this.nextClientPhNo = nextClientPhNo;
+    }
+
+    @NonNull
+    public String getNextMeetingDate() {
+        return nextMeetingDate;
+    }
+
+    public void setNextMeetingDate(@NonNull String nextMeetingDate) {
+        this.nextMeetingDate = nextMeetingDate;
+    }
+
+    @NonNull
+    public String getNextMeetingTime() {
+        return nextMeetingTime;
+    }
+
+    public void setNextMeetingTime(@NonNull String nextMeetingTime) {
+        this.nextMeetingTime = nextMeetingTime;
     }
 
     @NonNull
@@ -305,5 +298,13 @@ public class ClientPersonEntity {
 
     public void setMeetingOutcome(@NonNull String meetingOutcome) {
         this.meetingOutcome = meetingOutcome;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
     }
 }

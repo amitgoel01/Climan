@@ -12,6 +12,10 @@ public class ClientEntity {
     private long clientId; // auto
     @NonNull
     private String clientGroup; // AUTO 1
+
+    @NonNull
+    private String clientGroupName; // AUTO 1
+
     @NonNull
     private String clientCompanyName;
 
@@ -31,12 +35,14 @@ public class ClientEntity {
     @NonNull
     private String clientSource; // reference -- cold
     // if interested
+    private String timeStamp;
 
     @NonNull
     private String salesPersonId;
 
-    public ClientEntity(@NonNull String clientGroup, @NonNull String clientCompanyName, @NonNull String clientAddressFirstLine1, @NonNull String clientAddressSecondLine1, @NonNull String clientCountry, @NonNull String clientState, @NonNull String clientCity, @NonNull String clientPinCode, @NonNull String clientSource, @NonNull String salesPersonId) {
+    public ClientEntity(@NonNull String clientGroup, @NonNull String clientGroupName, @NonNull String clientCompanyName, @NonNull String clientAddressFirstLine1, @NonNull String clientAddressSecondLine1, @NonNull String clientCountry, @NonNull String clientState, @NonNull String clientCity, @NonNull String clientPinCode, @NonNull String clientSource, String timeStamp, @NonNull String salesPersonId) {
         this.clientGroup = clientGroup;
+        this.clientGroupName = clientGroupName;
         this.clientCompanyName = clientCompanyName;
         this.clientAddressFirstLine1 = clientAddressFirstLine1;
         this.clientAddressSecondLine1 = clientAddressSecondLine1;
@@ -45,20 +51,31 @@ public class ClientEntity {
         this.clientCity = clientCity;
         this.clientPinCode = clientPinCode;
         this.clientSource = clientSource;
+        this.timeStamp = timeStamp;
         this.salesPersonId = salesPersonId;
-    }
-
-    public long getClientId() {
-        return clientId;
     }
 
     public void setClientId(long clientId) {
         this.clientId = clientId;
     }
 
+    public long getClientId() {
+        return clientId;
+    }
+
     @NonNull
     public String getClientGroup() {
         return clientGroup;
+    }
+
+
+    @NonNull
+    public String getClientGroupName() {
+        return clientGroupName;
+    }
+
+    public void setClientGroupName(@NonNull String clientGroupName) {
+        this.clientGroupName = clientGroupName;
     }
 
     public void setClientGroup(@NonNull String clientGroup) {
@@ -135,6 +152,14 @@ public class ClientEntity {
 
     public void setClientSource(@NonNull String clientSource) {
         this.clientSource = clientSource;
+    }
+
+    public String getTimeStamp() {
+        return timeStamp;
+    }
+
+    public void setTimeStamp(String timeStamp) {
+        this.timeStamp = timeStamp;
     }
 
     @NonNull

@@ -16,8 +16,8 @@ import androidx.room.Update;
 @Dao
 public interface ClientDao {
 
-    @Query("SELECT * FROM " + Constants.TABLE_CLIENT)
-    LiveData<List<ClientEntity>> listAllClients();
+    @Query("SELECT * FROM " + Constants.TABLE_CLIENT  + " WHERE " + Constants.SALES_PERSON_ID + " = :salesPersonId")
+    LiveData<List<ClientEntity>> listAllClients(String salesPersonId);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     long insertClient(ClientEntity ClientEntity);
@@ -25,6 +25,9 @@ public interface ClientDao {
     @Query("SELECT * FROM " + Constants.TABLE_CLIENT + " WHERE " + Constants.SALES_PERSON_ID + " = :salesPersonId" +
             " ORDER BY " + Constants.CLIENT_ID + " DESC " + " LIMIT " + 1)
     List<ClientEntity> findClientWithId(String salesPersonId);
+
+    @Query("SELECT * FROM " + Constants.TABLE_CLIENT + " WHERE " + Constants.CLIENT_ID + " = :clientId")
+    List<ClientEntity> findClientWithClientId(String clientId);
 
     @Query("SELECT * FROM " + Constants.TABLE_CLIENT + " WHERE " + Constants.SALES_PERSON_ID + " = :salesPersonId" +
             " ORDER BY " + Constants.CLIENT_ID + " DESC ")

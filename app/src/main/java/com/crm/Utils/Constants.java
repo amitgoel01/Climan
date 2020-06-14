@@ -21,7 +21,19 @@ final public class Constants {
     public static final String CLIENT_ID = "clientId";
     public static final String CLIENT_PERSON_ID = "cpId";
     public static final String SALES_PERSON_ID = "salesPersonId";
+    public static final String TIME_STAMP = "timeStamp";
 
     public static final String ONE = "one";
     public static final String ALL = "all";
+
+    public static final String CLIENT_GROUP = "CG";
+    public static final String CLIENT_COMPANY_NAME = "COMPANY";
+    public static final String ADDRESS_1 = "ADDRESS 1";
+    public static final String ADDRESS_2 = "ADDRESS 2";
+    public static final String COUNTRY = "COUNTRY";
+    public static final String STATE = "STATE";
+    public static final String CITY = "CITY";
+    public static final String PIN_CODE = "PIN";
+    public static final String SOURCE = "SOURCE";
+
 }
