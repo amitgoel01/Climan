@@ -21,6 +21,7 @@ import com.crm.Utils.AddressUtils;
 import com.crm.Utils.Constants;
 import com.crm.Utils.DatePickerFragment;
 import com.crm.Utils.FileUtils;
+import com.crm.Utils.InvoiceData;
 import com.crm.Utils.InvoiceGenerator;
 import com.crm.adapters.ClientItemAdapter;
 import com.crm.adapters.ClientItemDetailsAdapter;
@@ -71,11 +72,13 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
     private String timeStamp;
     private ClientItemDetailsAdapter mClientItemDetailsAdapter;
     private String mClientId;
-    ArrayList<Item> itemList = new ArrayList<>();
+    private ArrayList<Item> itemList = new ArrayList<>();
     private boolean detailStatus;
-    Dialog mDialog;
+    private Dialog mDialog;
     private boolean flag;
-    PermissionsChecker checker;
+    private PermissionsChecker checker;
+    private ClientEntity mClientEntity;
+    private ClientPersonEntity mClientPersonEntity;
 
     @Nullable
     @Override
@@ -148,6 +151,7 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
             mClientViewModel.getSearchResults().observe(getActivity(), new Observer<List<ClientEntity>>() {
                 @Override
                 public void onChanged(List<ClientEntity> clientEntities) {
+                    mClientEntity = clientEntities.get(0);
                     mClientItemDetailsAdapter.setList(formItemList(clientEntities.get(0)));
                     detailStatus = false;
                     addClientPersonDetails();
@@ -174,6 +178,7 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
 
                        if(i == clientPersonEntities.size() -1) {
                            if(clientPersonEntities.get(i).getNextContactPerson().equals(getResources().getString(R.string.not_required))) {
+                               mClientPersonEntity = clientPersonEntities.get(i);
                                mFollowUpClientBinding.followUpClientContent.clientPersonDetail.clientDetailLayout.setVisibility(View.GONE);
                                mFollowUpClientBinding.followUpClientContent.preview.setVisibility(View.VISIBLE);
                                mFollowUpClientBinding.followUpClientContent.saveButton.setVisibility(View.GONE);
@@ -456,7 +461,7 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
                 break;
 
             case R.id.preview:
-
+                mDialog.show();
                 break;
 
             default:
@@ -469,7 +474,14 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
         if (checker.lacksPermissions(REQUIRED_PERMISSION)) {
             PermissionsActivity.startActivityForResult(getActivity(), PERMISSION_REQUEST_CODE, REQUIRED_PERMISSION);
         } else {
-            new InvoiceGenerator(getContext(), FileUtils.getAppPath(getContext()) + Constants.INVOICE);
+            InvoiceData data = new InvoiceData(mClientEntity.getClientCompanyName(),
+                    mClientEntity.getClientAddressFirstLine1(),
+                    mClientEntity.getClientAddressSecondLine1(),
+//                    mClientPersonEntity.getNextClientContactPerson(),
+                    "Client",
+                    "Annual revenue",
+                    FileUtils.getAppPath(getContext()) + Constants.INVOICE);
+            new InvoiceGenerator(getContext(), data);
         }
     }
 

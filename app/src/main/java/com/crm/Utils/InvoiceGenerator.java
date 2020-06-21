@@ -3,6 +3,7 @@ package com.crm.Utils;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Bundle;
 import android.widget.Toast;
 
 import com.itextpdf.text.BaseColor;
@@ -28,10 +29,11 @@ import java.util.Random;
 
 public class InvoiceGenerator {
 	private Context mContext;
-
-    public InvoiceGenerator(Context context, String pdfFilename) {
+    private InvoiceData mData;
+    public InvoiceGenerator(Context context, InvoiceData data) {
     	mContext = context;
-        createPDF(pdfFilename);
+    	mData = data;
+        createPDF(data.getPath());
     }
 
 	public void createPDF (String dest){
@@ -78,12 +80,19 @@ public class InvoiceGenerator {
 			Font font = FontFactory.getFont(FontFactory.TIMES_ROMAN, 13, Font.BOLD);
 			fs.addFont(font);
 			Phrase bill = fs.process("Bill To"); // customer information
-			Paragraph name = new Paragraph("Mr.Venkateswara Rao");
-			name.setIndentationLeft(20);
-			Paragraph contact = new Paragraph("9652886877");
-			contact.setIndentationLeft(20);
-			Paragraph address = new Paragraph("Kuchipudi,Movva");
-			address.setIndentationLeft(20);
+            Paragraph contactName = new Paragraph(mData.getContactPerson());
+            contactName.setIndentationLeft(20);
+
+			Paragraph companyName = new Paragraph(mData.getCompanyName());
+            companyName.setIndentationLeft(20);
+
+          /*  Paragraph contact = new Paragraph(mData.getCompanyName());
+            contact.setIndentationLeft(20);*/
+			Paragraph address1 = new Paragraph(mData.getAddressFirstLine());
+            address1.setIndentationLeft(20);
+
+			Paragraph address2 = new Paragraph(mData.getAddressSecondLine());
+			address2.setIndentationLeft(20);
 
 			PdfPTable billTable = new PdfPTable(6); //one page contains 15 records
 			billTable.setWidthPercentage(100);
@@ -238,9 +247,10 @@ public class InvoiceGenerator {
 			document.add(image);
 			document.add(irhTable);
 			document.add(bill);
-			document.add(name);
-			document.add(contact);
-			document.add(address);			
+            document.add(contactName);
+			document.add(companyName);
+			document.add(address1);
+			document.add(address2);
 			document.add(billTable);
 			document.add(describer);
 
