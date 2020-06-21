@@ -7,24 +7,25 @@
         android:layout_height="wrap_content">
         <ImageView
             android:id="@+id/left_img"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:paddingStart="5dp"
             android:contentDescription="@string/more_info"
             android:src="@drawable/ic_person_black_24dp"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
 
         <TextView
             android:id="@+id/header_text"
-            android:drawablePadding="4dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingTop="4dp"
             android:text="@string/client_Company_Name"
-            android:singleLine="true"
-            android:layout_toEndOf="@id/left_img"
-            app:layout_constraintTop_toTopOf="@id/left_img"
-            app:layout_constraintLeft_toRightOf="@+id/left_img"
+            android:textSize="16sp"
+            android:paddingTop="2dp"
+            style="@style/normalTextStyle"
+            app:layout_constraintLeft_toRightOf="@id/left_img"
+            app:layout_constraintTop_toTopOf="parent"
              />
 
         <TextView
@@ -32,17 +33,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/client_Company_Name"
-            android:singleLine="true"
-            android:layout_toEndOf="@id/left_img"
+            android:textSize="20sp"
+            android:paddingBottom="4dp"
             app:layout_constraintLeft_toRightOf="@+id/left_img"
-
-            app:layout_constraintTop_toBottomOf="@id/header_text"/>
+            android:textColor="@android:color/black"
+            app:layout_constraintTop_toBottomOf="@+id/header_text"
+            app:layout_constraintBottom_toBottomOf="@id/line"
+            style="@style/normalTextStyle"/>
 
         <View
-            android:layout_height="2dp"
+            android:id="@+id/line"
+            android:layout_height="1dp"
             android:layout_width="match_parent"
-            android:paddingTop="4dp"
-            android:background="@color/black"
+            android:background="@color/blackTextColor"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"/>

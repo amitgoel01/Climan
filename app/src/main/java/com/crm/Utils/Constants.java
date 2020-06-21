@@ -35,5 +35,6 @@ final public class Constants {
     public static final String CITY = "CITY";
     public static final String PIN_CODE = "PIN";
     public static final String SOURCE = "SOURCE";
+    public static final String INVOICE = "invoice.pdf";
 
 }

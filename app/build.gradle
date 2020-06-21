@@ -88,4 +88,7 @@ dependencies {
     implementation "android.arch.lifecycle:viewmodel:1.1.0"
     implementation "com.hbb20:ccp:1.7.1"
     implementation 'androidx.core:core:1.2.0'
+    implementation files('libs\\itextg-5.5.8.jar')
+
+
 }

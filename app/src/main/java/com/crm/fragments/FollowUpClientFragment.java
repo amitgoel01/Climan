@@ -18,7 +18,10 @@ import android.widget.TimePicker;
 
 import com.crm.R;
 import com.crm.Utils.AddressUtils;
+import com.crm.Utils.Constants;
 import com.crm.Utils.DatePickerFragment;
+import com.crm.Utils.FileUtils;
+import com.crm.Utils.InvoiceGenerator;
 import com.crm.adapters.ClientItemAdapter;
 import com.crm.adapters.ClientItemDetailsAdapter;
 import com.crm.database.entity.ClientEntity;
@@ -27,6 +30,8 @@ import com.crm.database.entity.ClientPersonEntity;
 import com.crm.databinding.FragmentFollowUpClientBinding;
 import com.crm.model.Item;
 import com.crm.model.PersonalDetails;
+import com.crm.permission.PermissionsActivity;
+import com.crm.permission.PermissionsChecker;
 import com.crm.viewmodel.ClientPersonViewModel;
 import com.crm.viewmodel.ClientViewModel;
 
@@ -49,6 +54,9 @@ import androidx.navigation.Navigation;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import static com.crm.permission.PermissionsActivity.PERMISSION_REQUEST_CODE;
+import static com.crm.permission.PermissionsChecker.REQUIRED_PERMISSION;
+
 public class FollowUpClientFragment extends Fragment implements View.OnClickListener, DatePickerFragment.IUpdateDate {
     private final static String TAG = FollowUpClientFragment.class.getName();
 //    private TextView clientGroupSpinner;
@@ -67,6 +75,8 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
     private boolean detailStatus;
     Dialog mDialog;
     private boolean flag;
+    PermissionsChecker checker;
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -83,6 +93,8 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
         setUpViews();
         setToolbar();
         setClickListeners();
+        checker = new PermissionsChecker(getActivity());
+
         return(mFollowUpClientBinding.getRoot());
     }
 
@@ -118,7 +130,7 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
         clientPersonViewModel.getSearchResults().observe(getActivity(), new Observer<List<ClientPersonEntity>>() {
             @Override
             public void onChanged(List<ClientPersonEntity> clientPersonEntities) {
-                Log.d("goel", "size is : " + clientPersonEntities.size());
+                Log.d(TAG, "size is : " + clientPersonEntities.size());
             }
         });
 //        getAddClientObserver();
@@ -150,16 +162,26 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
        mClientPersonViewModel.getSearchResults().observe(this, new Observer<List<ClientPersonEntity>>() {
            @Override
            public void onChanged(List<ClientPersonEntity> clientPersonEntities) {
-               Log.d("goel", "size is : " + clientPersonEntities.size());
+               Log.d(TAG, "size is : " + clientPersonEntities.size());
 
 //               mClientItemDetailsAdapter.setList(formItemList(clientEntity));
                if(!detailStatus) {
                    detailStatus = true;
+
                    for(int i=0; i<clientPersonEntities.size(); i++) {
                        itemList.add(new Item(R.drawable.back , " Client Meeting Outcome :" + (i+1),""));
                        formPersonClientList(clientPersonEntities.get(i));
+
                        if(i == clientPersonEntities.size() -1) {
-                           loadNextPersonDetail(clientPersonEntities.get(i));
+                           if(clientPersonEntities.get(i).getNextContactPerson().equals(getResources().getString(R.string.not_required))) {
+                               mFollowUpClientBinding.followUpClientContent.clientPersonDetail.clientDetailLayout.setVisibility(View.GONE);
+                               mFollowUpClientBinding.followUpClientContent.preview.setVisibility(View.VISIBLE);
+                               mFollowUpClientBinding.followUpClientContent.saveButton.setVisibility(View.GONE);
+                               mFollowUpClientBinding.followUpClientContent.quote.setVisibility(View.VISIBLE);
+                           }
+                           else {
+                               loadNextPersonDetail(clientPersonEntities.get(i));
+                           }
                        }
                    }
 
@@ -171,32 +193,6 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
            }
        });
    }
-
-    /*private void getAddClientObserver() {
-        mClientViewModel.listAllClients().observe(getActivity(), new Observer<List<ClientEntity>>() {
-            @Override
-            public void onChanged(List<ClientEntity> clientEntityList) {
-                Log.d(TAG, "getAddClientObserver clientEntityList size:  " + clientEntityList.size());
-                mClientViewModel.getSearchResults().observe(getActivity(), new Observer<List<ClientEntity>>() {
-                            @Override
-                            public void onChanged(List<ClientEntity> searchResults) {
-                                Log.d(TAG, "timestamp: " + timeStamp);
-                                if(searchResults.size() > 0 && searchResults.get(0).getTimeStamp().equals(timeStamp)) {
-                                    Long clientId = searchResults.get(0).getClientId();
-
-                                    mClientPersonViewModel.updateClientPersonId(timeStamp*//*searchResults.get(0).getClientId()*//*, String.valueOf(searchResults.get(0).getClientId()));
-                                   Toast.makeText(getContext(), "client is added succesfully added \n Note your client id:  "
-                                            + "c" + searchResults.get(0).getClientId() + "  clieint Id:  "  +clientId, Toast.LENGTH_LONG).show();
-                                }
-                            }
-                        });
-
-                        mClientViewModel.findClientWithId("amit");
-            }
-        });
-    }*/
-
-
 
     private View.OnFocusChangeListener onFocusChangeListener(AutoCompleteTextView view, List<String> list) {
         View.OnFocusChangeListener focusChangeListener = new View.OnFocusChangeListener() {
@@ -258,6 +254,8 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
         mFollowUpClientBinding.followUpClientContent.clientPersonDetail.nextMeetingTime.setOnClickListener(timePickerClick());
 
         mFollowUpClientBinding.followUpClientContent.saveButton.setOnClickListener(this);
+        mFollowUpClientBinding.followUpClientContent.preview.setOnClickListener(this);
+        mFollowUpClientBinding.followUpClientContent.quote.setOnClickListener(this);
 //        mClientBinding.goButton.setOnClickListener(this);
 
 //        clientTypeSelection();
@@ -452,9 +450,26 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
                 timeStamp = new SimpleDateFormat("yyyy.MM.dd.HH.mm.ss").format(new Date());
                 saveClientPersonInformation();
                  break;
+
+            case R.id.quote:
+                createInvoice();
+                break;
+
+            case R.id.preview:
+
+                break;
+
             default:
                 break;
 
+        }
+    }
+
+    private void createInvoice() {
+        if (checker.lacksPermissions(REQUIRED_PERMISSION)) {
+            PermissionsActivity.startActivityForResult(getActivity(), PERMISSION_REQUEST_CODE, REQUIRED_PERMISSION);
+        } else {
+            new InvoiceGenerator(getContext(), FileUtils.getAppPath(getContext()) + Constants.INVOICE);
         }
     }
 
@@ -520,14 +535,14 @@ public class FollowUpClientFragment extends Fragment implements View.OnClickList
         mClientPersonViewModel.listAllPersonClients().observe(getActivity(), new Observer<List<ClientPersonEntity>>() {
             @Override
             public void onChanged(List<ClientPersonEntity> clientPersonEntities) {
-                Log.d("goel", "timestamp: " + timeStamp);
+                Log.d(TAG, "timestamp: " + timeStamp);
                 for(int i = 0; i< clientPersonEntities.size(); i++) {
-                    Log.d("goel", "timestamp: value of i " + i);
+                    Log.d(TAG, "timestamp: value of i " + i);
                     if(clientPersonEntities.get(i).getTimeStamp().equals(timeStamp)) {
                         if(!flag) {
                             flag = true;
                             mClientPersonViewModel.updateClientPersonId(timeStamp, mClientId);
-                            Log.d("goel", "exit ");
+                            Log.d(TAG, "exit ");
                             Navigation.findNavController(mFollowUpClientBinding.getRoot()).navigate(R.id.action_followUpClientFragment_to_dashboardFragment);
                         }
                     }
